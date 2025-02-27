@@ -1,0 +1,42 @@
+.references-container {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.reference {
+  width: 50%;
+  padding: 10px;
+  background-color: #183b45;
+  border-radius: 10px;
+  margin-top: 30px;
+  justify-self: center;
+}
+
+.reference-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.reference-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-top: 5px;
+}
+
+.reference-name {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.reference-title {
+  margin-left: 20px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.reference-info {
+  cursor: text;
+}

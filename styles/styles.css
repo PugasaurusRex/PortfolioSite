@@ -17,7 +17,10 @@ p {
   display: flex;
   justify-content: center;
   gap: 20px; /* Space between links */
-  margin-top: 30px; /* Space below the name */
+  padding-top: 30px; /* Space below the name */
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  background-color:#183b45;
 }
 
 .nav-link {

@@ -9,7 +9,6 @@ function createNavBar() {
   `;
 
   nav.innerHTML = html;
-  console.log("HI");
 }
 
 createNavBar();

@@ -1,7 +1,15 @@
 .name-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 50px;
+}
+
+.profile-pic {
+  height: 100px;
+  width: 100px;
+  margin-right: 20px;
+  border-radius: 50px;
 }
 
 .animated-name {
@@ -16,6 +24,11 @@
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
+}
+
+.animated-name span:hover {
+  transform: translateY(-10px);
+  cursor: default;
 }
 
 @keyframes fadeInUp {
@@ -53,7 +66,7 @@
 .box-container {
   display: flex;
   justify-content: space-between;
-  margin: 100px 100px; /* Space between name, boxes, and edges */
+  margin: 100px 200px; /* Space between name, boxes, and edges */
   opacity: 0; /* Initially hidden */
   transform: translateX(-100%); /* Start off-screen to the left */
   transition: opacity 0.5s ease, transform 0.5s ease;

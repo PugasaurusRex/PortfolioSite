@@ -77,8 +77,8 @@
 }
 
 .box:hover {
-  height: 350px; /* Expanded height */
-  transform: translateY(-20px);
+  transform: translateZ(20px) scale(1.1); /* Move the box "closer" to the viewer */
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3); /* Add a larger shadow for depth */
 }
 
 .box-text {

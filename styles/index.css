@@ -23,11 +23,7 @@
   display: inline-block;
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 0.5s ease forwards;
-}
-
-.animated-name span:hover {
-  transform: translateY(-10px);
+  animation: fadeInUp 0.5s ease-in forwards;
   cursor: default;
 }
 
@@ -57,16 +53,11 @@
   font-weight: bold;
 }
 
-.link {
-  text-decoration: none;
-  color: #61dafb;
-  width: 18%;
-}
-
 .box-container {
   display: flex;
-  justify-content: space-between;
-  margin: 100px 200px; /* Space between name, boxes, and edges */
+  justify-content: center;
+  gap: 50px;
+  margin-top: 100px;
   opacity: 0; /* Initially hidden */
   transform: translateX(-100%); /* Start off-screen to the left */
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -81,8 +72,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 200px; /* Initial height */
+  width: 200px;
+  height: 200px;
   background-color: #183b45;
   border-radius: 10px;
   transition: height 0.3s ease, transform 0.3s ease;

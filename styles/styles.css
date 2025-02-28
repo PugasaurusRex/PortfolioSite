@@ -12,6 +12,11 @@ p {
   cursor: default;
 }
 
+.link {
+  text-decoration: none;
+  color: #61dafb;
+}
+
 /* Navigation Bar Styles */
 .navbar {
   display: flex;

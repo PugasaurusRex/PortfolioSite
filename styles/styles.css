@@ -42,3 +42,9 @@ p {
   background-color: rgba(97, 218, 251, 0.1); /* Light background on hover */
   transform: translateY(-5px); /* Slight lift on hover */
 }
+
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

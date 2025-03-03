@@ -6,11 +6,6 @@
   position: relative;
 }
 
-.timeline h1 {
-  text-align: center;
-  color: #333;
-}
-
 .timeline-container {
   position: relative;
 }
@@ -67,11 +62,18 @@
   position: relative;
 }
 
-.timeline-date {
+.timeline-item-title {
+  color: black;
+}
+
+.timeline-item-company {
+  margin-top: 10px;
+}
+
+.timeline-item-date {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-  font-weight: bold;
+  color: #888;
+  margin-top: 10px;
 }
 
 .timeline-item.left .timeline-content {

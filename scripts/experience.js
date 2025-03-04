@@ -1,3 +1,7 @@
+import { createNavBar } from "./navbar.js";
+
+createNavBar('../');
+
 document.addEventListener("DOMContentLoaded", function () {
   const timelineItems = document.querySelectorAll(".timeline-item");
 
@@ -22,17 +26,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let left = true;
-function createTimelineItem(title, company, dateRange) {
+function createTimelineItem(title, company, dateRange, link) {
   const timelineContainer = document.querySelector('.timeline-container');
 
   const html = `
-    <div class="timeline-item ${left ? 'left' : 'right'}">
-      <div class="timeline-content">
-        <h2 class="timeline-item-title">${title}</h2>
-        <p class="timeline-item-company">${company}</p>
-        <p class="timeline-item-date">${dateRange}</p>
+    <a class='link' href="experience-pages/${link}">
+      <div class="timeline-item ${left ? 'left' : 'right'}">
+        <div class="timeline-content">
+          <h2 class="timeline-item-title">${title}</h2>
+          <p class="timeline-item-company">${company}</p>
+          <p class="timeline-item-date">${dateRange}</p>
+        </div>
       </div>
-    </div>
+    </a>
   `;
 
   timelineContainer.innerHTML += html;
@@ -40,7 +46,7 @@ function createTimelineItem(title, company, dateRange) {
   left = !left;
 }
 
-createTimelineItem('Research Scientist (Computer Science)', 'Florida Polytechnic University', 'February 2023 - Present');
+createTimelineItem('Research Scientist (Computer Science)', 'Florida Polytechnic University', 'February 2023 - Present', 'research-scientist.html');
 createTimelineItem('Software Engineer', 'Avra Medical Robotics', 'February 2022 - September 2022');
-createTimelineItem('Research Assistant (Computer Science)', 'Florida Polytechnic University', 'May 2020 - April 2021');
-createTimelineItem('Bachelor\'s of Computer Science', 'Florida Polytechnic University', 'August 2018 - May 2022');
+createTimelineItem('Research Assistant (Computer Science)', 'Florida Polytechnic University', 'May 2020 - April 2021', );
+createTimelineItem('Bachelor\'s of Computer Science', 'Florida Polytechnic University', 'August 2018 - May 2022', );

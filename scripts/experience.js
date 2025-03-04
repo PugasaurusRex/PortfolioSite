@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-          observer.unobserve(entry.target); // Stop observing once the item is visible
+        }
+        else {
+          entry.target.classList.remove("visible");
         }
       });
     },
@@ -40,4 +42,5 @@ function createTimelineItem(title, company, dateRange) {
 
 createTimelineItem('Research Scientist (Computer Science)', 'Florida Polytechnic University', 'February 2023 - Present');
 createTimelineItem('Software Engineer', 'Avra Medical Robotics', 'February 2022 - September 2022');
-createTimelineItem('Research Assistant', 'Florida Polytechnic University', 'May 2020 - April 2021');
+createTimelineItem('Research Assistant (Computer Science)', 'Florida Polytechnic University', 'May 2020 - April 2021');
+createTimelineItem('Bachelor\'s of Computer Science', 'Florida Polytechnic University', 'August 2018 - May 2022');

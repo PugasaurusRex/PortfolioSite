@@ -47,6 +47,6 @@ function createTimelineItem(title, company, dateRange, link) {
 }
 
 createTimelineItem('Research Scientist (Computer Science)', 'Florida Polytechnic University', 'February 2023 - Present', 'research-scientist.html');
-createTimelineItem('Software Engineer', 'Avra Medical Robotics', 'February 2022 - September 2022');
-createTimelineItem('Research Assistant (Computer Science)', 'Florida Polytechnic University', 'May 2020 - April 2021', );
-createTimelineItem('Bachelor\'s of Computer Science', 'Florida Polytechnic University', 'August 2018 - May 2022', );
+createTimelineItem('Software Engineer', 'Avra Medical Robotics', 'February 2022 - September 2022', 'software-engineer.html');
+createTimelineItem('Research Assistant (Computer Science)', 'Florida Polytechnic University', 'May 2020 - April 2021', 'research-assistant.html');
+createTimelineItem('Bachelor\'s of Computer Science', 'Florida Polytechnic University', 'August 2018 - May 2022', 'degree.html');

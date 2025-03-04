@@ -6,9 +6,9 @@ export function createNavBar(linkToRoot) {
 
   const html = `
       <a class="nav-link" href="${linkToRoot}index.html">Home</a>
-      <a class="nav-link" href="${linkToRoot}/html/experience.html">Experience</a>
-      <a class="nav-link" href="${linkToRoot}/html/projects.html">Projects</a>
-      <a class="nav-link" href="${linkToRoot}/html/references.html">References</a>
+      <a class="nav-link" href="${linkToRoot}html/experience.html">Experience</a>
+      <a class="nav-link" href="${linkToRoot}html/projects.html">Projects</a>
+      <a class="nav-link" href="${linkToRoot}html/references.html">References</a>
   `;
 
   nav.innerHTML = html;

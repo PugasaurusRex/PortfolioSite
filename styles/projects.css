@@ -1,0 +1,38 @@
+/* General Styles */
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Grid Layout */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+.project-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #183b45;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 250px;
+  height: 200px;
+}
+
+.project-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.project-box h3 {
+  font-size: 1.5rem;
+  margin: 15px 0 10px;
+}

@@ -1,9 +1,7 @@
 .game-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+  margin-top: 50px;
 }
 
 .container {
@@ -25,7 +23,7 @@
 
 #game {
   display: grid;
-  gap: 2px;
+  justify-content: center;
   margin: 0 auto;
 }
 

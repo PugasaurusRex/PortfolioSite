@@ -119,11 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cell = document.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
     cell.classList.add('revealed');
     if (board[row][col] === 9) {
-      cell.style.backgroundImage = "url('../images/minesweeper/9.png')"; // Bomb image
+      cell.style.backgroundImage = "url('../../images/minesweeper/9.png')"; // Bomb image
     } else if (board[row][col] === 0) {
-      cell.style.backgroundImage = "url('../images/minesweeper/0.png')"; // Empty cell image
+      cell.style.backgroundImage = "url('../../images/minesweeper/0.png')"; // Empty cell image
     } else {
-      cell.style.backgroundImage = `url('../images/minesweeper/${board[row][col]}.png')`; // Numbered cell image
+      cell.style.backgroundImage = `url('../../images/minesweeper/${board[row][col]}.png')`; // Numbered cell image
     }
     if (board[row][col] === 0) {
       for (let i = -1; i <= 1; i++) {
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let col = 0; col < cols; col++) {
         if (board[row][col] === 9) {
           const cell = document.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
-          cell.style.backgroundImage = "url('../images/minesweeper/9.png')"; // Bomb image
+          cell.style.backgroundImage = "url('../../images/minesweeper/9.png')"; // Bomb image
           cell.classList.add('revealed');
         }
       }

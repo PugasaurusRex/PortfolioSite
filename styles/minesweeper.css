@@ -6,7 +6,7 @@
 
 .container {
   text-align: center;
-  background-color: #fff;
+  background-color: #183b45;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
 .cell {
   width: 30px;
   height: 30px;
-  background-image: url('../images/minesweeper/normal.png');
+  background-image: url('../../images/minesweeper/normal.png');
   background-size: cover;
   cursor: pointer;
   border: 1px solid #999;
@@ -42,7 +42,7 @@
 }
 
 .cell.flagged {
-  background-image: url('../images/minesweeper/flag.png');
+  background-image: url('../../images/minesweeper/flag.png');
   background-size: cover;
 }
 

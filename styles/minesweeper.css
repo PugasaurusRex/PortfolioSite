@@ -1,0 +1,55 @@
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings {
+  margin-bottom: 20px;
+}
+
+.settings input {
+  width: 50px;
+  margin-right: 10px;
+}
+
+#game {
+  display: grid;
+  gap: 2px;
+  margin: 0 auto;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background-image: url('../images/minesweeper/normal.png');
+  background-size: cover;
+  cursor: pointer;
+  border: 1px solid #999;
+}
+
+.cell.revealed {
+  background-color: #ddd;
+  cursor: default;
+}
+
+.cell.flagged {
+  background-image: url('../images/minesweeper/flag.png');
+  background-size: cover;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #333;
+}

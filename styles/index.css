@@ -36,6 +36,7 @@
 
 .summary-container,
 .contact-container,
+.skills-container,
 .box-container {
   opacity: 0; /* Initially hidden */
   transform: translateX(-100%); /* Start off-screen to the left */
@@ -44,6 +45,7 @@
 
 .summary-container.visible,
 .contact-container.visible,
+.skills-container.visible,
 .box-container.visible {
   opacity: 1;
   transform: translateX(0); /* Slide in to the original position */
@@ -78,11 +80,22 @@
   height: 50px;
 }
 
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.skills {
+  width: 55%;
+}
+
 .box-container {
   display: flex;
   justify-content: center;
   gap: 50px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .box {

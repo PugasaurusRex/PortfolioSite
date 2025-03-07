@@ -13,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let difficulty = 43;
   let mistakes = 3;
   let currentNumber = 1;
-  let numCount = Array(9).fill(0);
+
+  let numSolutions = 0;
+
   let gameBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
   let filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
   let solvedBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
-  let activeTiles = Array.from({ length: 9 }, () => Array(9).fill(0));
+
   let notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
 
   startGameButton.addEventListener('click', () => {
@@ -44,18 +46,22 @@ document.addEventListener('DOMContentLoaded', () => {
     mistakes = 3;
     mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
 
-
     // Initialize the board with zeros
     filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
     fillBoard(filledBoard);
 
-    // Generate and print the Sudoku board
-    console.log(filledBoard);
-    return;
     removeSquares(difficulty);
+
+    let dotCount = 0;
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        if(gameBoard[x][y] === '.')
+          dotCount++;
+      }
+    }
+    console.log(dotCount);
+
     solvedBoard = JSON.parse(JSON.stringify(gameBoard)); // Copy of the solved board
-    removeTilesBasedOnDifficulty();
-    activeTiles = Array.from({ length: 9 }, () => Array(9).fill(0));
     notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
     renderBoard();
     renderNumberSelector();
@@ -121,65 +127,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function removeSquares(numRemove) {
-    // Matrix for active tiles
-    activeTiles = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-    numLeft = numRemove;
-
     // Create new gameboard from already solved board
-    numSolutions = 0;
     let testSpots = [];
     for (let x = 0; x < 9; x++) {
-        for (let y = 0; y < 9; y++) {
-            gameBoard[x][y] = filledBoard[x][y];
-            testSpots.push(`${x},${y}`);
-        }
+      for (let y = 0; y < 9; y++) {
+        gameBoard[x][y] = filledBoard[x][y];
+        testSpots.push(`${x},${y}`);
+      }
     }
 
-    // Remove first 40 tiles before checking uniqueness
-    while (true) {
-        // Remove 40 tiles
-        for (let num = 0; num < 40; num++) {
-            const testIndex = testSpots.splice(Math.floor(Math.random() * testSpots.length), 1)[0];
-            const [i, j] = testIndex.split(',').map(Number);
-            numCount[gameBoard[i][j] - 1] += 1;
-            gameBoard[i][j] = '.';
-            activeTiles[i][j] = 1;
-        }
+    let counter = 0;
+    while (counter < numRemove && testSpots.length !== 0) {
+      const testIndex = testSpots.splice(Math.floor(Math.random() * (testSpots.length)), 1)[0];
+      const [i, j] = testIndex.split(',').map(Number);
 
-        // Check uniqueness with recursion
-        solveSudoku(gameBoard, false, true);
+      gameBoard[i][j] = '.';
+      solveSudoku(gameBoard, false, true)
 
-        // If not unique, reset gameboard and try again
-        if (numSolutions !== 1) {
-            activeTiles = Array.from({ length: 9 }, () => Array(9).fill(0));
-            numCount = Array(9).fill(0);
-            testSpots = [];
-            for (let x = 0; x < 9; x++) {
-                for (let y = 0; y < 9; y++) {
-                    gameBoard[x][y] = filledBoard[x][y];
-                    testSpots.push(`${x},${y}`);
-                }
-            }
-        } else if (numSolutions === 1) {
-            break;
-        }
-    }
-
-    // Check board uniqueness after each square removed
-    // If the randomly chosen square removes board uniqueness, it is not removed
-    for (let num = 0; num < numRemove - 40; num++) {
-        const testIndex = testSpots.splice(Math.floor(Math.random() * testSpots.length), 1)[0];
-        const [i, j] = testIndex.split(',').map(Number);
-        const temp = gameBoard[i][j];
-        gameBoard[i][j] = '.';
-        solveSudoku(gameBoard, false, true);
-        if (numSolutions !== 1) {
-            gameBoard[i][j] = filledBoard[i][j];
-        } else if (numSolutions === 1) {
-            numCount[temp - 1] += 1;
-            activeTiles[i][j] = 1;
-        }
+      if (numSolutions !== 1) {
+        gameBoard[i][j] = filledBoard[i][j];
+      } else {
+        counter++;
+      }
     }
   }
 
@@ -194,39 +163,39 @@ document.addEventListener('DOMContentLoaded', () => {
         selectorButtons[i].style.backgroundColor = "#0008ff";
         selectorButtons[i].style.color = "white";
         for (let j = 0; j < 9; j++) {
-          activeTiles[i][j] = 1;
           buttons[i][j].disabled = true;
         }
       }
     }
 
     if (recursive) {
-        // Lists for storing the contents of rows, columns, and squares
-        const rowContains = Array.from({ length: 9 }, () => Array(9).fill(0));
-        const colContains = Array.from({ length: 9 }, () => Array(9).fill(0));
-        const sqsContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+      // Lists for storing the contents of rows, columns, and squares
+      const rowContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+      const colContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+      const sqsContains = Array.from({ length: 9 }, () => Array(9).fill(0));
 
-        // Get values for each row, column, and square completion
-        for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-                if (board[i][j] !== '.') {
-                    const idx = parseInt(board[i][j]) - 1;
-                    rowContains[i][idx] = 1;
-                    colContains[j][idx] = 1;
-                    sqsContains[getSquare(i, j)][idx] = 1;
-                }
-            }
-        }
+      // Get values for each row, column, and square completion
+      for (let i = 0; i < 9; i++) {
+          for (let j = 0; j < 9; j++) {
+              if (board[i][j] !== '.') {
+                  const idx = parseInt(board[i][j]) - 1;
+                  rowContains[i][idx] = 1;
+                  colContains[j][idx] = 1;
+                  sqsContains[getSquare(i, j)][idx] = 1;
+              }
+          }
+      }
 
-        // Start recursive solve
-        if (visual) {
-            visualSolve(board, rowContains, colContains, sqsContains, 0, 0);
-        } else {
-            numSolutions = 0;
-            recursiveSolve(board, rowContains, colContains, sqsContains, 0, 0);
-        }
+      // Start recursive solve
+      if (visual) {
+        visualSolve(board, rowContains, colContains, sqsContains, 0, 0);
+      } else {
+        numSolutions = 0;
+        recursiveSolve(board, rowContains, colContains, sqsContains, 0, 0);
+        return numSolutions;
+      }
     }
-}
+  }
 
   function recursiveSolve(board, rC, cC, sC, row, col) {
       // Base Case
@@ -337,18 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.floor(row / 3) * 3 + Math.floor(col / 3);
   }
 
-  function removeTilesBasedOnDifficulty() {
-      let tilesToRemove = difficulty;
-      while (tilesToRemove > 0) {
-          const row = Math.floor(Math.random() * 9);
-          const col = Math.floor(Math.random() * 9);
-          if (gameBoard[row][col] !== 0) {
-              gameBoard[row][col] = 0;
-              tilesToRemove--;
-          }
-      }
-  }
-
   function renderBoard() {
       for (let i = 0; i < 9; i++) {
           for (let j = 0; j < 9; j++) {
@@ -387,7 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
               }
           } else {
               gameBoard[i][j] = currentNumber;
-              activeTiles[i][j] = 0;
               if (checkVictory()) {
                   alert('Victory!');
                   initializeGame();

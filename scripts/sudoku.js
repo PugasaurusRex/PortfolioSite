@@ -44,10 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
     mistakes = 3;
     mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
 
-    // while(!fillBoard())
-    //   fillBoard();
+
+    // Initialize the board with zeros
+    filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
+    fillBoard(filledBoard);
+
     // Generate and print the Sudoku board
-    //console.log(filledBoard);
+    console.log(filledBoard);
     return;
     removeSquares(difficulty);
     solvedBoard = JSON.parse(JSON.stringify(gameBoard)); // Copy of the solved board
@@ -58,71 +61,59 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNumberSelector();
   }
 
-  function fillBoard() {
-    // Initialize the board with zeros
-    filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
+  function fillBoard(filledBoard) {
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (filledBoard[row][col] === 0) {
+          let numsTested = 0;
+          const usedNumbers = [];
+          while (numsTested < 9) {
+            // Random number between 1 and 9 that is available
+            let randomNumber;
+            do {
+              randomNumber = Math.floor(Math.random() * 9) + 1;
+            }
+            while (usedNumbers.includes(randomNumber));
+            
+            if (isValid(filledBoard, row, col, randomNumber)){
+              filledBoard[row][col] = randomNumber;
 
-    // Values available for each row, column, and square
-    const rows = Array.from({ length: 9 }, () => Array.from({ length: 9 }, (_, i) => i + 1));
-    const cols = Array.from({ length: 9 }, () => Array.from({ length: 9 }, (_, i) => i + 1));
-    const sqs = Array.from({ length: 9 }, () => Array.from({ length: 9 }, (_, i) => i + 1));
-
-    // Default values for resetting rows
-    const defaultR = Array.from({ length: 9 }, (_, i) => i + 1);
-
-    // Iteration counter
-    let iterations = 0;
-
-    for (let i = 0; i < 9; i++) {
-      // Value for checking infinite loops
-      let x = -1;
-      // j counter
-      let j = 0;
-
-      while (j < 9) {
-        while (true) {
-          iterations += 1;
-
-          // If iterations get too high, call fillBoard again
-          if (iterations > 5000) {
-            return false;
-          }
-
-          const lastX = x;
-
-          // Get a random value from the current row's available numbers
-          x = rows[i][Math.floor(Math.random() * rows[i].length)];
-          const sq = getSquare(i, j);
-
-          // If the value is valid for the column and square, set it
-          if (cols[j].includes(x) && sqs[sq].includes(x)) {
-            // Remove the value from the available lists
-            rows[i] = rows[i].filter(num => num !== x);
-            cols[j] = cols[j].filter(num => num !== x);
-            sqs[sq] = sqs[sq].filter(num => num !== x);
-
-            // Set the value on the board
-            filledBoard[i][j] = x;
-            j += 1;
-            break;
-          }
-          // If the value is repeating, restart the row
-          else if (lastX === x) {
-            rows[i] = [defaultR];
-            j = 0;
-
-            for (let k = 0; k < 9; k++) {
-              if (filledBoard[i][k] !== 0) {
-                cols[k].push(filledBoard[i][k]);
-                sqs[getSquare(i, k)].push(filledBoard[i][k]);
-                filledBoard[i][k] = 0;
-                x = -1;
-              } else {
-                break;
+              // Recursively fill the rest of the board
+              if (fillBoard(filledBoard)) {
+                return true;
               }
             }
+
+            usedNumbers.push(randomNumber);
+            
+            // If no valid number, backtrack
+            filledBoard[row][col] = 0;
+            numsTested++; 
           }
+          return false;
         }
+      }
+    }
+    return true;
+  }
+
+  function isValid(board, row, col, num) {
+    // Check row
+    for (let i = 0; i < 9; i++) {
+      if (board[row][i] === num) return false;
+    }
+
+    // Check column
+    for (let i = 0; i < 9; i++) {
+      if (board[i][col] === num) return false;
+    }
+
+    // Check 3x3 subgrid
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (board[startRow + i][startCol + j] === num) return false;
       }
     }
 
@@ -344,20 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper function to get the square index
   function getSquare(row, col) {
     return Math.floor(row / 3) * 3 + Math.floor(col / 3);
-  }
-
-  function isValid(board, row, col, num) {
-      for (let i = 0; i < 9; i++) {
-          if (board[row][i] === num || board[i][col] === num) return false;
-      }
-      const startRow = Math.floor(row / 3) * 3;
-      const startCol = Math.floor(col / 3) * 3;
-      for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-              if (board[startRow + i][startCol + j] === num) return false;
-          }
-      }
-      return true;
   }
 
   function removeTilesBasedOnDifficulty() {

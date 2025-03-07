@@ -1,0 +1,71 @@
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+#menu, #game {
+  text-align: center;
+}
+
+#menu h1 {
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+#menu button, #game button {
+  background-color: #3e3d41;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#menu button:hover, #game button:hover {
+  background-color: #567f4e;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(9, 50px);
+  grid-template-rows: repeat(9, 50px);
+  gap: 2px;
+  margin: 20px auto;
+}
+
+#board div {
+  background-color: #017acc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#board div:hover {
+  background-color: #61c9fd;
+}
+
+#numberSelector {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+#numberSelector button {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+
+#solverControls {
+  margin-top: 20px;
+}
+
+#solverControls label {
+  display: block;
+  margin-bottom: 10px;
+}

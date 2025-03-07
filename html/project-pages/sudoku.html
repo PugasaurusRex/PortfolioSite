@@ -6,10 +6,40 @@
   <title>Sudoku</title>
 
   <link rel="stylesheet" href="../../styles/styles.css">
+  <link rel="stylesheet" href="../../styles/sudoku.css">
 </head>
 <body>
   <nav class="navbar"></nav>
 
+  <div class="game-container">
+    <div id="menu">
+      <h1>Sudoku</h1>
+      <button id="startGame">Start Game</button>
+      <label for="difficulty">Choose a Difficulty:</label>
+      <select id="difficulty">
+        <option value="43">Easy</option>
+        <option value="51">Medium</option>
+        <option value="56">Hard</option>
+        <option value="58">Expert</option>
+      </select>
+    </div>
+    <div id="game" style="display: none;">
+      <div id="toolbar">
+        <button id="menuButton">Menu</button>
+        <button id="restartButton">Restart</button>
+        <span id="mistakesLeft">Mistakes Left: 3</span>
+      </div>
+      <div id="board"></div>
+      <div id="numberSelector"></div>
+      <div id="solverControls">
+        <button id="recursiveSolver">Recursive Solver</button>
+        <label for="intervalSlider">Interval Between Iterations: 20 milliseconds</label>
+        <input type="range" id="intervalSlider" min="0" max="3000" value="20" step="10">
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="../../scripts/project-pages.js"></script>
+  <script src="../../scripts/sudoku.js"></script>
 </body>
 </html>

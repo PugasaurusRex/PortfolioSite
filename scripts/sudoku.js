@@ -15,10 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentNumber = 1;
 
   let numSolutions = 0;
+  let bestBoard = null; // Stores the best board state
+  let maxRemoved = 0; // Tracks the maximum number of tiles removed
 
   let gameBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
   let filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
-  let solvedBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
 
   let notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
 
@@ -51,17 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fillBoard(filledBoard);
 
     removeSquares(difficulty);
+    gameBoard = bestBoard;
 
-    let dotCount = 0;
-    for (let x = 0; x < 9; x++) {
-      for (let y = 0; y < 9; y++) {
-        if(gameBoard[x][y] === '.')
-          dotCount++;
-      }
-    }
-    console.log(dotCount);
-
-    solvedBoard = JSON.parse(JSON.stringify(gameBoard)); // Copy of the solved board
     notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
     renderBoard();
     renderNumberSelector();
@@ -127,29 +119,63 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function removeSquares(numRemove) {
-    // Create new gameboard from already solved board
+    // Create a new gameboard from the already solved board
     let testSpots = [];
     for (let x = 0; x < 9; x++) {
-      for (let y = 0; y < 9; y++) {
-        gameBoard[x][y] = filledBoard[x][y];
-        testSpots.push(`${x},${y}`);
-      }
+        for (let y = 0; y < 9; y++) {
+            gameBoard[x][y] = filledBoard[x][y];
+            testSpots.push(`${x},${y}`);
+        }
     }
 
-    let counter = 0;
-    while (counter < numRemove && testSpots.length !== 0) {
-      const testIndex = testSpots.splice(Math.floor(Math.random() * (testSpots.length)), 1)[0];
-      const [i, j] = testIndex.split(',').map(Number);
+    // Initialize bestBoard and maxRemoved
+    bestBoard = JSON.parse(JSON.stringify(gameBoard)); // Deep copy of the initial board
+    maxRemoved = 0;
 
-      gameBoard[i][j] = '.';
-      solveSudoku(gameBoard, false, true)
+    // Start the recursive process
+    rs(gameBoard, 0, numRemove, testSpots);
 
-      if (numSolutions !== 1) {
-        gameBoard[i][j] = filledBoard[i][j];
-      } else {
-        counter++;
-      }
+    // After recursion, log the best solution found
+    console.log("Best solution found with", maxRemoved, "tiles removed:");
+  }
+
+  function rs(gameBoard, counter, numRemove, testSpots) {
+    // Update the best solution if the current state is better
+    if (counter > maxRemoved) {
+        maxRemoved = counter;
+        bestBoard = JSON.parse(JSON.stringify(gameBoard)); // Save the current board state
     }
+
+    if (counter >= numRemove) {
+        console.log("Successfully removed", numRemove, "tiles.");
+        return true; // Successfully removed the desired number of tiles
+    }
+
+    if (testSpots.length === 0) {
+        return false; // No more spots to try
+    }
+
+    // Try removing a tile
+    const testIndex = testSpots.splice(Math.floor(Math.random() * testSpots.length), 1)[0];
+    const [i, j] = testIndex.split(',').map(Number);
+
+    const originalValue = gameBoard[i][j];
+    gameBoard[i][j] = '.'; // Remove the tile
+
+    // Check if the board still has a unique solution
+    numSolutions = 0; // Reset the number of solutions
+    solveSudoku(gameBoard, false, true); // Solve the board and count solutions
+
+    if (numSolutions === 1) {
+        // If the solution is still unique, continue removing more tiles
+        if (rs(gameBoard, counter + 1, numRemove, testSpots)) {
+            return true;
+        }
+    }
+
+    // If removing this tile leads to multiple solutions, backtrack
+    gameBoard[i][j] = originalValue; // Restore the original value
+    return rs(gameBoard, counter, numRemove, testSpots); // Try other spots
   }
 
   function solveSudoku(board, visual, recursive) {
@@ -334,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (gameBoard[i][j] === 0) {
           const cell = board.children[i * 9 + j];
           cell.textContent = currentNumber;
-          if (currentNumber !== solvedBoard[i][j]) {
+          if (currentNumber !== filledBoard[i][j]) {
               mistakes--;
               mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
               cell.style.color = 'red';
@@ -381,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkVictory() {
-      return gameBoard.every((row, i) => row.every((cell, j) => cell === solvedBoard[i][j]));
+      return gameBoard.every((row, i) => row.every((cell, j) => cell === filledBoard[i][j]));
   }
 
   // Solver functions (optional)

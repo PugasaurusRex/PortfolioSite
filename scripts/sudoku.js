@@ -1,14 +1,14 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const menu = document.getElementById('menu');
-  const game = document.getElementById('game');
-  const startGameButton = document.getElementById('startGame');
-  const menuButton = document.getElementById('menuButton');
-  const restartButton = document.getElementById('restartButton');
-  const board = document.getElementById('board');
-  const numberSelector = document.getElementById('numberSelector');
-  const recursiveSolver = document.getElementById('recursiveSolver');
-  const intervalSlider = document.getElementById('intervalSlider');
-  const mistakesLeft = document.getElementById('mistakesLeft');
+document.addEventListener("DOMContentLoaded", () => {
+  const menu = document.getElementById("menu");
+  const game = document.getElementById("game");
+  const startGameButton = document.getElementById("startGame");
+  const menuButton = document.getElementById("menuButton");
+  const restartButton = document.getElementById("restartButton");
+  const board = document.getElementById("board");
+  const numberSelector = document.getElementById("numberSelector");
+  const recursiveSolver = document.getElementById("recursiveSolver");
+  const intervalSlider = document.getElementById("intervalSlider");
+  const mistakesLeft = document.getElementById("mistakesLeft");
 
   let difficulty = 43;
   let mistakes = 3;
@@ -21,29 +21,31 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
   let filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
 
-  let notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
+  let notes = Array.from({ length: 9 }, () =>
+    Array.from({ length: 9 }, () => Array(9).fill(0))
+  );
 
-  startGameButton.addEventListener('click', () => {
-    difficulty = parseInt(document.getElementById('difficulty').value);
+  startGameButton.addEventListener("click", () => {
+    difficulty = parseInt(document.getElementById("difficulty").value);
     mistakes = 3;
     mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
-    menu.style.display = 'none';
-    game.style.display = 'block';
+    menu.style.display = "none";
+    game.style.display = "block";
     initializeGame();
   });
 
-  menuButton.addEventListener('click', () => {
-    game.style.display = 'none';
-    menu.style.display = 'block';
+  menuButton.addEventListener("click", () => {
+    game.style.display = "none";
+    menu.style.display = "block";
   });
 
-  restartButton.addEventListener('click', () => {
+  restartButton.addEventListener("click", () => {
     initializeGame();
   });
 
   function initializeGame() {
-    board.innerHTML = '';
-    numberSelector.innerHTML = '';
+    board.innerHTML = "";
+    numberSelector.innerHTML = "";
     mistakes = 3;
     mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
 
@@ -54,7 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
     removeSquares(difficulty);
     gameBoard = bestBoard;
 
-    notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
+    notes = Array.from({ length: 9 }, () =>
+      Array.from({ length: 9 }, () => Array(9).fill(0))
+    );
     renderBoard();
     renderNumberSelector();
   }
@@ -70,10 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let randomNumber;
             do {
               randomNumber = Math.floor(Math.random() * 9) + 1;
-            }
-            while (usedNumbers.includes(randomNumber));
-            
-            if (isValid(filledBoard, row, col, randomNumber)){
+            } while (usedNumbers.includes(randomNumber));
+
+            if (isValid(filledBoard, row, col, randomNumber)) {
               filledBoard[row][col] = randomNumber;
 
               // Recursively fill the rest of the board
@@ -83,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             usedNumbers.push(randomNumber);
-            
+
             // If no valid number, backtrack
             filledBoard[row][col] = 0;
-            numsTested++; 
+            numsTested++;
           }
           return false;
         }
@@ -122,10 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create a new gameboard from the already solved board
     let testSpots = [];
     for (let x = 0; x < 9; x++) {
-        for (let y = 0; y < 9; y++) {
-            gameBoard[x][y] = filledBoard[x][y];
-            testSpots.push(`${x},${y}`);
-        }
+      for (let y = 0; y < 9; y++) {
+        gameBoard[x][y] = filledBoard[x][y];
+        testSpots.push(`${x},${y}`);
+      }
     }
 
     // Initialize bestBoard and maxRemoved
@@ -142,35 +145,38 @@ document.addEventListener('DOMContentLoaded', () => {
   function rs(gameBoard, counter, numRemove, testSpots) {
     // Update the best solution if the current state is better
     if (counter > maxRemoved) {
-        maxRemoved = counter;
-        bestBoard = JSON.parse(JSON.stringify(gameBoard)); // Save the current board state
+      maxRemoved = counter;
+      bestBoard = JSON.parse(JSON.stringify(gameBoard)); // Save the current board state
     }
 
     if (counter >= numRemove) {
-        console.log("Successfully removed", numRemove, "tiles.");
-        return true; // Successfully removed the desired number of tiles
+      console.log("Successfully removed", numRemove, "tiles.");
+      return true; // Successfully removed the desired number of tiles
     }
 
     if (testSpots.length === 0) {
-        return false; // No more spots to try
+      return false; // No more spots to try
     }
 
     // Try removing a tile
-    const testIndex = testSpots.splice(Math.floor(Math.random() * testSpots.length), 1)[0];
-    const [i, j] = testIndex.split(',').map(Number);
+    const testIndex = testSpots.splice(
+      Math.floor(Math.random() * testSpots.length),
+      1
+    )[0];
+    const [i, j] = testIndex.split(",").map(Number);
 
     const originalValue = gameBoard[i][j];
-    gameBoard[i][j] = '.'; // Remove the tile
+    gameBoard[i][j] = "."; // Remove the tile
 
     // Check if the board still has a unique solution
     numSolutions = 0; // Reset the number of solutions
     solveSudoku(gameBoard, false, true); // Solve the board and count solutions
 
     if (numSolutions === 1) {
-        // If the solution is still unique, continue removing more tiles
-        if (rs(gameBoard, counter + 1, numRemove, testSpots)) {
-            return true;
-        }
+      // If the solution is still unique, continue removing more tiles
+      if (rs(gameBoard, counter + 1, numRemove, testSpots)) {
+        return true;
+      }
     }
 
     // If removing this tile leads to multiple solutions, backtrack
@@ -202,14 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Get values for each row, column, and square completion
       for (let i = 0; i < 9; i++) {
-          for (let j = 0; j < 9; j++) {
-              if (board[i][j] !== '.') {
-                  const idx = parseInt(board[i][j]) - 1;
-                  rowContains[i][idx] = 1;
-                  colContains[j][idx] = 1;
-                  sqsContains[getSquare(i, j)][idx] = 1;
-              }
+        for (let j = 0; j < 9; j++) {
+          if (board[i][j] !== ".") {
+            const idx = parseInt(board[i][j]) - 1;
+            rowContains[i][idx] = 1;
+            colContains[j][idx] = 1;
+            sqsContains[getSquare(i, j)][idx] = 1;
           }
+        }
       }
 
       // Start recursive solve
@@ -224,107 +230,133 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function recursiveSolve(board, rC, cC, sC, row, col) {
-      // Base Case
-      if (numSolutions > 1) {
-          return true;
-      }
+    // Base Case
+    if (numSolutions > 1) {
+      return true;
+    }
+    if (row === 9) {
+      numSolutions += 1;
+      return false;
+    }
+
+    // Loop until next unsolved tile
+    while (board[row][col] !== ".") {
+      row = rowCounter(row, col);
+      col = colCounter(col);
       if (row === 9) {
-          numSolutions += 1;
-          return false;
+        numSolutions += 1;
+        return false;
+      }
+    }
+
+    // When unsolved tile is found, loop through 1 to 9
+    for (let i = 0; i < 9; i++) {
+      // If number is valid, set it on the board
+      if (
+        rC[row][i] === 0 &&
+        cC[col][i] === 0 &&
+        sC[getSquare(row, col)][i] === 0
+      ) {
+        rC[row][i] = 1;
+        cC[col][i] = 1;
+        sC[getSquare(row, col)][i] = 1;
+        board[row][col] = (i + 1).toString();
+
+        // If game is completed, return true; otherwise, reset and try next value
+        if (
+          recursiveSolve(
+            board,
+            rC,
+            cC,
+            sC,
+            rowCounter(row, col),
+            colCounter(col)
+          )
+        ) {
+          return true;
+        } else {
+          rC[row][i] = 0;
+          cC[col][i] = 0;
+          sC[getSquare(row, col)][i] = 0;
+          board[row][col] = ".";
+        }
+      }
+    }
+    // No valid numbers, return false for backtracking
+    return false;
+  }
+
+  async function visualSolve(board, rC, cC, sC, row, col) {
+    try {
+      // Base Case
+      if (row === 9) {
+        return true;
       }
 
       // Loop until next unsolved tile
-      while (board[row][col] !== '.') {
-          row = rowCounter(row, col);
-          col = colCounter(col);
-          if (row === 9) {
-              numSolutions += 1;
-              return false;
-          }
+      while (board[row][col] !== ".") {
+        row = rowCounter(row, col);
+        col = colCounter(col);
+        if (row === 9) {
+          return true;
+        }
       }
 
       // When unsolved tile is found, loop through 1 to 9
       for (let i = 0; i < 9; i++) {
-          // If number is valid, set it on the board
-          if (rC[row][i] === 0 && cC[col][i] === 0 && sC[getSquare(row, col)][i] === 0) {
-              rC[row][i] = 1;
-              cC[col][i] = 1;
-              sC[getSquare(row, col)][i] = 1;
-              board[row][col] = (i + 1).toString();
+        // Update UI
+        buttons[row][col].textContent = (i + 1).toString();
+        buttons[row][col].style.backgroundColor = "#567f4e";
+        buttons[row][col].style.color = "white";
 
-              // If game is completed, return true; otherwise, reset and try next value
-              if (recursiveSolve(board, rC, cC, sC, rowCounter(row, col), colCounter(col))) {
-                  return true;
-              } else {
-                  rC[row][i] = 0;
-                  cC[col][i] = 0;
-                  sC[getSquare(row, col)][i] = 0;
-                  board[row][col] = '.';
-              }
+        // Add a delay for visualization
+        await new Promise((resolve) => setTimeout(resolve, time));
+
+        // If number is valid, set it on the board
+        if (
+          rC[row][i] === 0 &&
+          cC[col][i] === 0 &&
+          sC[getSquare(row, col)][i] === 0
+        ) {
+          board[row][col] = (i + 1).toString();
+          rC[row][i] = 1;
+          cC[col][i] = 1;
+          sC[getSquare(row, col)][i] = 1;
+
+          // If game is completed, return true; otherwise, reset and try another value
+          if (
+            await visualSolve(
+              board,
+              rC,
+              cC,
+              sC,
+              rowCounter(row, col),
+              colCounter(col)
+            )
+          ) {
+            return true;
+          } else {
+            rC[row][i] = 0;
+            cC[col][i] = 0;
+            sC[getSquare(row, col)][i] = 0;
+            board[row][col] = ".";
           }
+        }
       }
-      // No valid numbers, return false for backtracking
+      // If looped through all values and no valid one found, return false for backtracking
+      board[row][col] = ".";
+      // Update UI
+      buttons[row][col].textContent = "";
+      buttons[row][col].style.backgroundColor = "red";
+      buttons[row][col].style.color = "white";
+
+      // Add a delay for visualization
+      await new Promise((resolve) => setTimeout(resolve, time));
+
       return false;
-  }
-
-  async function visualSolve(board, rC, cC, sC, row, col) {
-      try {
-          // Base Case
-          if (row === 9) {
-              return true;
-          }
-
-          // Loop until next unsolved tile
-          while (board[row][col] !== '.') {
-              row = rowCounter(row, col);
-              col = colCounter(col);
-              if (row === 9) {
-                  return true;
-              }
-          }
-
-          // When unsolved tile is found, loop through 1 to 9
-          for (let i = 0; i < 9; i++) {
-              // Update UI
-              buttons[row][col].textContent = (i + 1).toString();
-              buttons[row][col].style.backgroundColor = "#567f4e";
-              buttons[row][col].style.color = "white";
-
-              // Add a delay for visualization
-              await new Promise((resolve) => setTimeout(resolve, time));
-
-              // If number is valid, set it on the board
-              if (rC[row][i] === 0 && cC[col][i] === 0 && sC[getSquare(row, col)][i] === 0) {
-                  board[row][col] = (i + 1).toString();
-                  rC[row][i] = 1;
-                  cC[col][i] = 1;
-                  sC[getSquare(row, col)][i] = 1;
-
-                  // If game is completed, return true; otherwise, reset and try another value
-                  if (await visualSolve(board, rC, cC, sC, rowCounter(row, col), colCounter(col))) {
-                      return true;
-                  } else {
-                      rC[row][i] = 0;
-                      cC[col][i] = 0;
-                      sC[getSquare(row, col)][i] = 0;
-                      board[row][col] = '.';
-                  }
-              }
-          }
-          // If looped through all values and no valid one found, return false for backtracking
-          board[row][col] = '.';
-          // Update UI
-          buttons[row][col].textContent = "";
-          buttons[row][col].style.backgroundColor = "red";
-          buttons[row][col].style.color = "white";
-
-          // Add a delay for visualization
-          await new Promise((resolve) => setTimeout(resolve, time));
-
-          return false;
-      } catch (error) {
-          console.log("Forcefully stopping solver due to restart or board wipe.");
-      }
+    } catch (error) {
+      console.log("Forcefully stopping solver due to restart or board wipe.");
+    }
   }
 
   // Helper function to get the square index
@@ -333,73 +365,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderBoard() {
-      for (let i = 0; i < 9; i++) {
-          for (let j = 0; j < 9; j++) {
-              const cell = document.createElement('div');
-              cell.textContent = gameBoard[i][j] === 0 ? '' : gameBoard[i][j];
-              cell.addEventListener('click', () => handleCellClick(i, j));
-              cell.addEventListener('contextmenu', (e) => {
-                  e.preventDefault();
-                  handleRightClick(i, j);
-              });
-              board.appendChild(cell);
-          }
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        const cell = document.createElement("div");
+        cell.textContent = gameBoard[i][j] === 0 ? "" : gameBoard[i][j];
+        cell.addEventListener("click", () => handleCellClick(i, j));
+        cell.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          handleRightClick(i, j);
+        });
+        board.appendChild(cell);
       }
+    }
   }
 
   function renderNumberSelector() {
-      for (let i = 1; i <= 9; i++) {
-          const button = document.createElement('button');
-          button.textContent = i;
-          button.addEventListener('click', () => setCurrentNumber(i));
-          numberSelector.appendChild(button);
-      }
+    for (let i = 1; i <= 9; i++) {
+      const button = document.createElement("button");
+      button.textContent = i;
+      button.addEventListener("click", () => setCurrentNumber(i));
+      numberSelector.appendChild(button);
+    }
   }
 
   function handleCellClick(i, j) {
-      if (gameBoard[i][j] === 0) {
-          const cell = board.children[i * 9 + j];
-          cell.textContent = currentNumber;
-          if (currentNumber !== filledBoard[i][j]) {
-              mistakes--;
-              mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
-              cell.style.color = 'red';
-              if (mistakes <= 0) {
-                  alert('Game Over!');
-                  initializeGame();
-              }
-          } else {
-              gameBoard[i][j] = currentNumber;
-              if (checkVictory()) {
-                  alert('Victory!');
-                  initializeGame();
-              }
-          }
+    if (gameBoard[i][j] === 0) {
+      const cell = board.children[i * 9 + j];
+      cell.textContent = currentNumber;
+      if (currentNumber !== filledBoard[i][j]) {
+        mistakes--;
+        mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
+        cell.style.color = "red";
+        if (mistakes <= 0) {
+          alert("Game Over!");
+          initializeGame();
+        }
+      } else {
+        gameBoard[i][j] = currentNumber;
+        if (checkVictory()) {
+          alert("Victory!");
+          initializeGame();
+        }
       }
+    }
   }
 
   function handleRightClick(i, j) {
-      if (gameBoard[i][j] === 0) {
-          const cell = board.children[i * 9 + j];
-          notes[i][j][currentNumber - 1] = notes[i][j][currentNumber - 1] ? 0 : 1;
-          let noteText = '';
-          for (let num = 1; num <= 9; num++) {
-              noteText += notes[i][j][num - 1] ? num : ' ';
-              if (num % 3 === 0) noteText += '\n';
-          }
-          cell.textContent = noteText.trim();
+    if (gameBoard[i][j] === 0) {
+      const cell = board.children[i * 9 + j];
+      notes[i][j][currentNumber - 1] = notes[i][j][currentNumber - 1] ? 0 : 1;
+      let noteText = "";
+      for (let num = 1; num <= 9; num++) {
+        noteText += notes[i][j][num - 1] ? num : " ";
+        if (num % 3 === 0) noteText += "\n";
       }
+      cell.textContent = noteText.trim();
+    }
   }
 
   function setCurrentNumber(number) {
-      currentNumber = number;
+    currentNumber = number;
   }
 
   function rowCounter(row, col) {
-    if ((col + 1) % 9 == 0)
-      return row + 1;
-    else
-      return row;
+    if ((col + 1) % 9 == 0) return row + 1;
+    else return row;
   }
 
   function colCounter(col) {
@@ -407,17 +437,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkVictory() {
-      return gameBoard.every((row, i) => row.every((cell, j) => cell === filledBoard[i][j]));
+    return gameBoard.every((row, i) =>
+      row.every((cell, j) => cell === filledBoard[i][j])
+    );
   }
 
   // Solver functions (optional)
-  recursiveSolver.addEventListener('click', () => {
-      solveSudoku(gameBoard);
-      renderBoard();
+  recursiveSolver.addEventListener("click", () => {
+    solveSudoku(gameBoard);
+    renderBoard();
   });
 
-  intervalSlider.addEventListener('input', () => {
-      const interval = intervalSlider.value;
-      document.querySelector('#solverControls label').textContent = `Interval Between Iterations: ${interval} milliseconds`;
+  intervalSlider.addEventListener("input", () => {
+    const interval = intervalSlider.value;
+    document.querySelector(
+      "#solverControls label"
+    ).textContent = `Interval Between Iterations: ${interval} milliseconds`;
   });
 });

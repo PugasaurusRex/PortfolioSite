@@ -21,9 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let gameBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
   let filledBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
 
-  let notes = Array.from({ length: 9 }, () =>
-    Array.from({ length: 9 }, () => Array(9).fill(0))
-  );
+  let notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
 
   startGameButton.addEventListener("click", () => {
     difficulty = parseInt(document.getElementById("difficulty").value);
@@ -56,9 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
     removeSquares(difficulty);
     gameBoard = bestBoard;
 
-    notes = Array.from({ length: 9 }, () =>
-      Array.from({ length: 9 }, () => Array(9).fill(0))
-    );
+    notes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => Array(9).fill(0)));
+    
     renderBoard();
     renderNumberSelector();
   }
@@ -159,18 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Try removing a tile
-    const testIndex = testSpots.splice(
-      Math.floor(Math.random() * testSpots.length),
-      1
-    )[0];
+    const testIndex = testSpots.splice(Math.floor(Math.random() * testSpots.length),1)[0];
     const [i, j] = testIndex.split(",").map(Number);
 
     const originalValue = gameBoard[i][j];
-    gameBoard[i][j] = "."; // Remove the tile
+    gameBoard[i][j] = 0; // Remove the tile
 
     // Check if the board still has a unique solution
     numSolutions = 0; // Reset the number of solutions
-    solveSudoku(gameBoard, false, true); // Solve the board and count solutions
+    solveSudoku(gameBoard, false); // Solve the board and count solutions
 
     if (numSolutions === 1) {
       // If the solution is still unique, continue removing more tiles
@@ -184,48 +178,36 @@ document.addEventListener("DOMContentLoaded", () => {
     return rs(gameBoard, counter, numRemove, testSpots); // Try other spots
   }
 
-  function solveSudoku(board, visual, recursive) {
+  function solveSudoku(board, visual) {
     if (visual) {
       // If visual solve is used, disable all buttons
-      recursiveButton.disabled = true;
-      noteButton.disabled = true;
+      
+    }
 
-      for (let i = 0; i < 9; i++) {
-        selectorButtons[i].disabled = true;
-        selectorButtons[i].style.backgroundColor = "#0008ff";
-        selectorButtons[i].style.color = "white";
-        for (let j = 0; j < 9; j++) {
-          buttons[i][j].disabled = true;
+    // Lists for storing the contents of rows, columns, and squares
+    const rowContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+    const colContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+    const sqsContains = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+    // Get values for each row, column, and square completion
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (board[i][j] !== ".") {
+          const idx = parseInt(board[i][j]) - 1;
+          rowContains[i][idx] = 1;
+          colContains[j][idx] = 1;
+          sqsContains[getSquare(i, j)][idx] = 1;
         }
       }
     }
 
-    if (recursive) {
-      // Lists for storing the contents of rows, columns, and squares
-      const rowContains = Array.from({ length: 9 }, () => Array(9).fill(0));
-      const colContains = Array.from({ length: 9 }, () => Array(9).fill(0));
-      const sqsContains = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-      // Get values for each row, column, and square completion
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          if (board[i][j] !== ".") {
-            const idx = parseInt(board[i][j]) - 1;
-            rowContains[i][idx] = 1;
-            colContains[j][idx] = 1;
-            sqsContains[getSquare(i, j)][idx] = 1;
-          }
-        }
-      }
-
-      // Start recursive solve
-      if (visual) {
-        visualSolve(board, rowContains, colContains, sqsContains, 0, 0);
-      } else {
-        numSolutions = 0;
-        recursiveSolve(board, rowContains, colContains, sqsContains, 0, 0);
-        return numSolutions;
-      }
+    // Start recursive solve
+    if (visual) {
+      visualSolve(board, rowContains, colContains, sqsContains, 0, 0);
+    } else {
+      numSolutions = 0;
+      recursiveSolve(board, rowContains, colContains, sqsContains, 0, 0);
+      return numSolutions;
     }
   }
 
@@ -288,74 +270,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function visualSolve(board, rC, cC, sC, row, col) {
     try {
-      // Base Case
+      // Base Case: If all rows are processed, the board is solved
       if (row === 9) {
         return true;
       }
 
-      // Loop until next unsolved tile
-      while (board[row][col] !== ".") {
+      // Move to the next cell if the current cell is already filled
+      while (gameBoard[row][col] !== 0) {
         row = rowCounter(row, col);
         col = colCounter(col);
+
         if (row === 9) {
           return true;
         }
       }
 
-      // When unsolved tile is found, loop through 1 to 9
+      // Try numbers from 1 to 9 in the current cell
       for (let i = 0; i < 9; i++) {
-        // Update UI
-        buttons[row][col].textContent = (i + 1).toString();
-        buttons[row][col].style.backgroundColor = "#567f4e";
-        buttons[row][col].style.color = "white";
+        // Get the cell element from the DOM
+        const cell = this.board.children[row * 9 + col];
+
+        // Update the cell's text and style
+        cell.textContent = (i + 1).toString();
+        cell.style.backgroundColor = "#567f4e";
+        cell.style.color = "white";
 
         // Add a delay for visualization
-        await new Promise((resolve) => setTimeout(resolve, time));
+        await new Promise((resolve) => setTimeout(resolve, intervalSlider.value));
 
-        // If number is valid, set it on the board
-        if (
-          rC[row][i] === 0 &&
-          cC[col][i] === 0 &&
-          sC[getSquare(row, col)][i] === 0
-        ) {
-          board[row][col] = (i + 1).toString();
+        // Check if the number is valid in the current cell
+        if (rC[row][i] === 0 && cC[col][i] === 0 && sC[getSquare(row, col)][i] === 0) {
+          // Mark the number as used in the current row, column, and square
           rC[row][i] = 1;
           cC[col][i] = 1;
           sC[getSquare(row, col)][i] = 1;
+          gameBoard[row][col] = (i + 1).toString();
 
-          // If game is completed, return true; otherwise, reset and try another value
-          if (
-            await visualSolve(
-              board,
-              rC,
-              cC,
-              sC,
-              rowCounter(row, col),
-              colCounter(col)
-            )
-          ) {
+          // Recursively solve the next cell
+          if (await visualSolve(gameBoard, rC, cC, sC, rowCounter(row, col), colCounter(col))) {
             return true;
           } else {
+            // Backtrack: Reset the cell and mark the number as unused
             rC[row][i] = 0;
             cC[col][i] = 0;
             sC[getSquare(row, col)][i] = 0;
-            board[row][col] = ".";
+            gameBoard[row][col] = 0;
           }
         }
+
+        // Reset the cell's text and style if the number is invalid
+        cell.textContent = "";
+        cell.style.backgroundColor = "#017acc";
+        cell.style.color = "white";
       }
-      // If looped through all values and no valid one found, return false for backtracking
-      board[row][col] = ".";
-      // Update UI
-      buttons[row][col].textContent = "";
-      buttons[row][col].style.backgroundColor = "red";
-      buttons[row][col].style.color = "white";
 
-      // Add a delay for visualization
-      await new Promise((resolve) => setTimeout(resolve, time));
-
+      // If no number is valid, backtrack
       return false;
     } catch (error) {
-      console.log("Forcefully stopping solver due to restart or board wipe.");
+      console.log(error);
     }
   }
 
@@ -365,19 +337,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderBoard() {
+    // Clear the board
+    board.innerHTML = '';
+
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        const cell = document.createElement("div");
-        cell.textContent = gameBoard[i][j] === 0 ? "" : gameBoard[i][j];
-        cell.addEventListener("click", () => handleCellClick(i, j));
-        cell.addEventListener("contextmenu", (e) => {
+        const cell = document.createElement('div');
+        cell.textContent = gameBoard[i][j] === 0 ? '' : gameBoard[i][j];
+
+        // Add thicker borders for 3x3 squares
+        if (i % 3 === 0) {
+          cell.style.borderTop = '5px solid black'; // Top border for 3x3 squares
+        }
+        if (j % 3 === 0) {
+          cell.style.borderLeft = '5px solid black'; // Left border for 3x3 squares
+        }
+        if (i === 8) {
+          cell.style.borderBottom = '5px solid black'; // Bottom border for the last row
+        }
+        if (j === 8) {
+          cell.style.borderRight = '5px solid black'; // Right border for the last column
+        }
+
+        // Add event listeners
+        cell.addEventListener('click', () => handleCellClick(i, j));
+        cell.addEventListener('contextmenu', (e) => {
           e.preventDefault();
           handleRightClick(i, j);
         });
+
+        // Append the cell to the board
         board.appendChild(cell);
       }
     }
-  }
+}
 
   function renderNumberSelector() {
     for (let i = 1; i <= 9; i++) {
@@ -402,6 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } else {
         gameBoard[i][j] = currentNumber;
+
         if (checkVictory()) {
           alert("Victory!");
           initializeGame();
@@ -444,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Solver functions (optional)
   recursiveSolver.addEventListener("click", () => {
-    solveSudoku(gameBoard);
+    solveSudoku(gameBoard, true);
     renderBoard();
   });
 

@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeGame() {
     isSolving = false;
     recursiveSolver.disabled = false;
+    toggleButton.disabled = false;
 
     board.innerHTML = "";
     numberSelector.innerHTML = "";
@@ -207,6 +208,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function solveSudoku(board, visual) {
     if (visual) {
+      resetHighlight();
+      toggleButton.disabled = true;
+      isHighlightEnabled = false;
+
       setCurrentNumber(0);
 
       // If visual solve is used, disable all buttons
@@ -620,6 +625,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function resetHighlight() {
+    if (isSolving)
+      return;
+
     // Reset all cells to default color
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {

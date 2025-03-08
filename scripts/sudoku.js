@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let mistakes = 3;
   let currentNumber = 1;
 
+  let isSolving = false;
+
   let numSolutions = 0;
   let bestBoard = null; // Stores the best board state
   let maxRemoved = 0; // Tracks the maximum number of tiles removed
@@ -35,13 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
   menuButton.addEventListener("click", () => {
     game.style.display = "none";
     menu.style.display = "block";
+    isSolving = false;
   });
 
-  restartButton.addEventListener("click", () => {
+  restartButton.addEventListener("click", () => { 
     initializeGame();
   });
 
   function initializeGame() {
+    isSolving = false;
     board.innerHTML = "";
     numberSelector.innerHTML = "";
     mistakes = 3;
@@ -58,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     renderBoard();
     renderNumberSelector();
+
+    setCurrentNumber(1);
   }
 
   function fillBoard(filledBoard) {
@@ -181,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function solveSudoku(board, visual) {
     if (visual) {
       // If visual solve is used, disable all buttons
-      
+      isSolving = true;
     }
 
     // Lists for storing the contents of rows, columns, and squares
@@ -276,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Move to the next cell if the current cell is already filled
-      while (gameBoard[row][col] !== 0) {
+      while (board[row][col] !== 0) {
         row = rowCounter(row, col);
         col = colCounter(col);
 
@@ -287,6 +293,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Try numbers from 1 to 9 in the current cell
       for (let i = 0; i < 9; i++) {
+        // Stop when game is reset
+        if (!isSolving)
+          return false;
+
         // Get the cell element from the DOM
         const cell = this.board.children[row * 9 + col];
 
@@ -304,17 +314,17 @@ document.addEventListener("DOMContentLoaded", () => {
           rC[row][i] = 1;
           cC[col][i] = 1;
           sC[getSquare(row, col)][i] = 1;
-          gameBoard[row][col] = (i + 1).toString();
+          board[row][col] = (i + 1).toString();
 
           // Recursively solve the next cell
-          if (await visualSolve(gameBoard, rC, cC, sC, rowCounter(row, col), colCounter(col))) {
+          if (await visualSolve(board, rC, cC, sC, rowCounter(row, col), colCounter(col))) {
             return true;
           } else {
             // Backtrack: Reset the cell and mark the number as unused
             rC[row][i] = 0;
             cC[col][i] = 0;
             sC[getSquare(row, col)][i] = 0;
-            gameBoard[row][col] = 0;
+            board[row][col] = 0;
           }
         }
 
@@ -376,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= 9; i++) {
       const button = document.createElement("button");
       button.textContent = i;
-      button.addEventListener("click", () => setCurrentNumber(i));
+      button.addEventListener("click", () => setCurrentNumber(i, button));
       numberSelector.appendChild(button);
     }
   }
@@ -418,7 +428,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setCurrentNumber(number) {
+    const lastButton = document.getElementById("numberSelector").children[currentNumber - 1];
+    if (lastButton){
+      lastButton.style.backgroundColor = "";
+    }
+    
+    const button = document.getElementById("numberSelector").children[number - 1];
+    button.style.backgroundColor = "#567f4e";
+
     currentNumber = number;
+
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        const cell = this.board.children[i * 9 + j];
+        if (gameBoard[i][j] == currentNumber) {
+          cell.style.color = "black";
+        } else {
+          cell.style.color = "white";
+        }
+      }
+    }
   }
 
   function rowCounter(row, col) {

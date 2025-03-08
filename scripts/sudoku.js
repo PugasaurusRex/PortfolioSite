@@ -1,3 +1,10 @@
+// Things to improve:
+// 1: Highlight currentNumber in notes
+// 2: Remove number from notes when in conflicts with a correctly placed number
+// 3: Highlight row, column, and square of a hovered cell. If it is filled, highlight all similar numbers.
+// 4: Special Highlight of last placed number
+// 5: Better cell highlighting for currentNumber
+
 document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("menu");
   const game = document.getElementById("game");
@@ -47,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function initializeGame() {
     isSolving = false;
+    recursiveSolver.disabled = false;
+
     board.innerHTML = "";
     numberSelector.innerHTML = "";
     mistakes = 3;
@@ -195,6 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       recursiveSolver.disabled = true;
+
+      // Disable all cells
+      for (let i = 0; i < this.board.children.length; i++) {
+        this.board.children[i].disabled = true;
+      }
 
       // Enable solving
       isSolving = true;
@@ -401,6 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleCellClick(i, j) {
+    if (isSolving)
+      return;
+
     // Remove wrong answer styling
     if (wrongAnswerButton) {
       wrongAnswerButton.style.color = "white";
@@ -448,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Select the lowest non-complete number
             for (let i = 0; i < 9; i++) {
-              if (!numberSelector.children.disabled) {
+              if (!numberSelector.children[i].disabled) {
                 setCurrentNumber(i + 1);
                 return;
               }
@@ -463,6 +480,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleRightClick(i, j) {
+    if (isSolving)
+      return;
+
     if (gameBoard[i][j] === 0) {
       const cell = board.children[i * 9 + j];
 

@@ -1,9 +1,6 @@
 // Things to improve:
 // 1: Highlight currentNumber in notes
 // 2: Remove number from notes when in conflicts with a correctly placed number
-// 3: Highlight row, column, and square of a hovered cell. If it is filled, highlight all similar numbers.
-// 4: Special Highlight of last placed number
-// 5: Better cell highlighting for currentNumber
 
 document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("menu");
@@ -392,11 +389,28 @@ document.addEventListener("DOMContentLoaded", () => {
           cell.style.borderRight = '5px solid black'; // Right border for the last column
         }
 
+        cell.setAttribute('data-row', i);
+        cell.setAttribute('data-col', j);
+
         // Add event listeners
         cell.addEventListener('click', () => handleCellClick(i, j));
         cell.addEventListener('contextmenu', (e) => {
           e.preventDefault();
           handleRightClick(i, j);
+        });
+
+        // Add event listener for hover
+        cell.addEventListener('mouseenter', (event) => {
+          const hoveredCell = event.target; // The cell being hovered
+          const hoveredRow = parseInt(hoveredCell.getAttribute('data-row'));
+          const hoveredCol = parseInt(hoveredCell.getAttribute('data-col'));
+          highlightCells(hoveredRow, hoveredCol); // Highlight related cells
+        });
+
+        // Add event listener for mouse leave
+        cell.addEventListener('mouseleave', () => {
+          resetHighlight(); // Reset highlights
+          highlightNumbers(currentNumber.toString());
         });
 
         // Append the cell to the board
@@ -537,13 +551,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
     currentNumber = number;
 
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        const cell = this.board.children[i * 9 + j];
-        if (gameBoard[i][j] == currentNumber) {
-          cell.style.color = "black";
-        } else {
-          cell.style.color = "white";
+    resetHighlight();
+    highlightNumbers(currentNumber.toString());
+  }
+
+  function highlightCells(hoveredRow, hoveredCol) {
+    // Reset all cells to default color
+    resetHighlight();
+
+    // Highlight cells in the same row
+    for (let col = 0; col < 9; col++) {
+      const cell = board.children[hoveredRow * 9 + col];
+      cell.style.backgroundColor = "#50a8d3"; // Highlight color for same row
+      if (cell.style.color !== 'red')
+        cell.style.color = 'black';
+    }
+
+    // Highlight cells in the same column
+    for (let row = 0; row < 9; row++) {
+      const cell = board.children[row * 9 + hoveredCol];
+      cell.style.backgroundColor = "#50a8d3"; // Highlight color for same column
+
+      if (cell.style.color !== 'red')
+        cell.style.color = 'black';
+    }
+
+    // Highlight cells in the same 3x3 square
+    const startRow = Math.floor(hoveredRow / 3) * 3;
+    const startCol = Math.floor(hoveredCol / 3) * 3;
+    for (let row = startRow; row < startRow + 3; row++) {
+      for (let col = startCol; col < startCol + 3; col++) {
+        const cell = board.children[row * 9 + col];
+        cell.style.backgroundColor = "#50a8d3"; // Highlight color for same square
+        
+        if (cell.style.color !== 'red')
+          cell.style.color = 'black';
+      }
+    }
+
+    // Highlight the hovered cell with a different color
+    const hoveredCell = board.children[hoveredRow * 9 + hoveredCol];
+    hoveredCell.style.backgroundColor = "#50a8d3"; // Highlight color for hovered cell
+    
+    if (hoveredCell.style.color !== 'red')
+      hoveredCell.style.color = 'black';
+
+    if (hoveredCell.textContent !== '')
+      highlightNumbers(hoveredCell.textContent);
+    else
+      highlightNumbers(currentNumber.toString());
+  }
+
+  function resetHighlight() {
+    // Reset all cells to default color
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const cell = board.children[row * 9 + col];
+        cell.style.backgroundColor = "#017acc"; // Default cell color
+        if (cell.style.color !== 'red')
+          cell.style.color = 'white';
+      }
+    }
+  }
+
+  function highlightNumbers(number) {
+    // Reset all cells to default color
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const cell = board.children[row * 9 + col];
+        if (cell.textContent === number) {
+          cell.style.backgroundColor = "#50a8d3"; // Highlight color for same square
+          if (cell.style.color !== 'red')
+            cell.style.color = 'black';
         }
       }
     }

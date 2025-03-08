@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startGameButton = document.getElementById("startGame");
   const menuButton = document.getElementById("menuButton");
   const restartButton = document.getElementById("restartButton");
+  const toggleButton = document.getElementById('toggleHighlight');
   const board = document.getElementById("board");
   const numberSelector = document.getElementById("numberSelector");
   const recursiveSolver = document.getElementById("recursiveSolver");
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isSolving = false;
   let wrongAnswerButton;
+  let isHighlightEnabled = true;
 
   let numSolutions = 0;
   let bestBoard = null; // Stores the best board state
@@ -47,6 +49,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   restartButton.addEventListener("click", () => { 
     initializeGame();
+  });
+
+  toggleButton.addEventListener('click', () => {
+    isHighlightEnabled = !isHighlightEnabled; // Toggle the state
+    toggleButton.textContent = isHighlightEnabled ? "Disable Highlighting" : "Enable Highlighting";
+
+    // Reset highlights when disabling
+    if (!isHighlightEnabled) {
+      resetHighlight();
+    } else {
+      highlightNumbers(currentNumber.toString());
+    }
   });
 
   function initializeGame() {
@@ -559,6 +573,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset all cells to default color
     resetHighlight();
 
+    if (!isHighlightEnabled)
+      return;
+
     // Highlight cells in the same row
     for (let col = 0; col < 9; col++) {
       const cell = board.children[hoveredRow * 9 + col];
@@ -615,6 +632,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function highlightNumbers(number) {
+    if (!isHighlightEnabled)
+      return;
+
     // Reset all cells to default color
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {

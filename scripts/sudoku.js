@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentNumber = 1;
 
   let isSolving = false;
+  let wrongAnswerButton;
 
   let numSolutions = 0;
   let bestBoard = null; // Stores the best board state
@@ -186,7 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function solveSudoku(board, visual) {
     if (visual) {
+      setCurrentNumber(0);
+
       // If visual solve is used, disable all buttons
+      for (let i = 0; i < numberSelector.children.length; i++) {
+        numberSelector.children[i].disabled = true;
+      }
+
+      recursiveSolver.disabled = true;
+
+      // Enable solving
       isSolving = true;
     }
 
@@ -341,7 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Helper function to get the square index
   function getSquare(row, col) {
     return Math.floor(row / 3) * 3 + Math.floor(col / 3);
   }
@@ -392,6 +401,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleCellClick(i, j) {
+    // Remove wrong answer styling
+    if (wrongAnswerButton) {
+      wrongAnswerButton.style.color = "white";
+      wrongAnswerButton.textContent = '';
+      wrongAnswerButton = undefined;
+    }
+
     if (gameBoard[i][j] === 0) {
       const cell = board.children[i * 9 + j];
       cell.textContent = currentNumber;
@@ -399,12 +415,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mistakes--;
         mistakesLeft.textContent = `Mistakes Left: ${mistakes}`;
         cell.style.color = "red";
+        wrongAnswerButton = cell;
         if (mistakes <= 0) {
           alert("Game Over!");
           initializeGame();
         }
       } else {
         gameBoard[i][j] = currentNumber;
+        determineAllNumberFilled(currentNumber);
 
         if (checkVictory()) {
           alert("Victory!");
@@ -414,27 +432,88 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function determineAllNumberFilled(number) {
+    let count = 0;
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (gameBoard[row][col] === number) {
+          count++;
+
+          // Set all selected number cells to highlighted
+          this.board.children[row * 9 + col].style.color = 'black';
+
+          if (count >= 9) { // number complete
+            numberSelector.children[number - 1].disabled = true;
+            numberSelector.children[number - 1].style.visibility = 'hidden';
+
+            // Select the lowest non-complete number
+            for (let i = 0; i < 9; i++) {
+              if (!numberSelector.children.disabled) {
+                setCurrentNumber(i + 1);
+                return;
+              }
+            }
+
+            // Return if game is over
+            return;
+          }
+        }
+      }
+    }
+  }
+
   function handleRightClick(i, j) {
     if (gameBoard[i][j] === 0) {
       const cell = board.children[i * 9 + j];
+
       notes[i][j][currentNumber - 1] = notes[i][j][currentNumber - 1] ? 0 : 1;
-      let noteText = "";
-      for (let num = 1; num <= 9; num++) {
-        noteText += notes[i][j][num - 1] ? num : " ";
-        if (num % 3 === 0) noteText += "\n";
+
+      const hasNotes = notes[i][j].some(note => note === 1);
+      if (hasNotes) {
+        // Create a 3x3 grid for notes
+        const gridContainer = document.createElement('div');
+        gridContainer.style.display = 'grid';
+        gridContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        gridContainer.style.gridTemplateRows = 'repeat(3, 1fr)';
+        gridContainer.style.width = '100%';
+        gridContainer.style.height = '100%';
+        gridContainer.style.textAlign = 'center';
+        gridContainer.style.alignItems = 'center';
+
+        // Populate the grid with numbers 1 through 9
+        for (let num = 1; num <= 9; num++) {
+          const numberDiv = document.createElement('div');
+          numberDiv.textContent = notes[i][j][num - 1] ? num : '';
+          numberDiv.style.fontSize = '12px'; // Adjust font size for better visibility
+          numberDiv.style.color = notes[i][j][num - 1] ? 'white' : 'transparent'; // Hide numbers that are not part of the note
+          numberDiv.style.backgroundColor = 'rgba(0,0,0,0)';
+          gridContainer.appendChild(numberDiv);
+        }
+
+        // Clear the cell's content and add the grid
+        cell.innerHTML = '';
+        cell.appendChild(gridContainer);
+      } else {
+        // Remove the grid if no notes exist
+        cell.innerHTML = '';
       }
-      cell.textContent = noteText.trim();
     }
   }
 
   function setCurrentNumber(number) {
-    const lastButton = document.getElementById("numberSelector").children[currentNumber - 1];
-    if (lastButton){
-      lastButton.style.backgroundColor = "";
+    // Remove highlight from last selected button
+    if (currentNumber <= 9 && currentNumber > 0) {
+      const lastButton = numberSelector.children[currentNumber - 1];
+      if (lastButton){
+        lastButton.style.backgroundColor = "";
+      }
     }
     
-    const button = document.getElementById("numberSelector").children[number - 1];
-    button.style.backgroundColor = "#567f4e";
+    // Highlight selected number
+    if (number <= 9 && number > 0) {
+      const button = numberSelector.children[number - 1];
+      button.style.backgroundColor = "#567f4e";
+    }
 
     currentNumber = number;
 
@@ -465,7 +544,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // Solver functions (optional)
   recursiveSolver.addEventListener("click", () => {
     solveSudoku(gameBoard, true);
     renderBoard();

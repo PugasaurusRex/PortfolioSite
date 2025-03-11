@@ -12,6 +12,14 @@ p {
   cursor: default;
 }
 
+a {
+  color: #61dafb;
+}
+
+a:hover {
+  color: #94e4fa;
+}
+
 .link {
   text-decoration: none;
   color: #61dafb;

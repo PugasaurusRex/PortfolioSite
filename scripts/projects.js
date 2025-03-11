@@ -14,7 +14,7 @@ function createProject(name, htmlFile) {
   `;
 }
 
-createProject('VR Shooting Range', 'vr-shooting-range');
+createProject('VR Shooter', 'vr-shooter');
 createProject('VR Computer Builder', 'vr-computer-builder');
 createProject('Dungeon Runners', 'dungeon-runners');
 createProject('The Last Defense', 'the-last-defense');

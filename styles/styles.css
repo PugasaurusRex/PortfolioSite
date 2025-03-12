@@ -20,6 +20,20 @@ a:hover {
   color: #94e4fa;
 }
 
+button {
+  background-color: #3e3d41;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #567f4e;
+}
+
 .link {
   text-decoration: none;
   color: #61dafb;

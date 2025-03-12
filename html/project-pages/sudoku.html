@@ -11,39 +11,42 @@
 <body>
   <nav class="navbar"></nav>
 
-  <h1 style="text-align: center;">Sudoku</h1>
-  <p style="text-align: center;">Originally created in Python. Code found <a target="_blank" href="https://github.com/PugasaurusRex/Sudoku/blob/master/Sudoku.py">here.</a></p>
-  <p style="text-align: center;">Recreated in HTML, CSS, and JavaScript. Code found <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/sudoku.js">here.</a></p>
+  <div class="project-container">
+    <h1 style="text-align: center;">Sudoku</h1>
+    <p style="text-align: center;">Originally created in Python. Code found <a target="_blank" href="https://github.com/PugasaurusRex/Sudoku/blob/master/Sudoku.py">here.</a></p>
+    <p style="text-align: center;">Recreated in HTML, CSS, and JavaScript. Code found <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/sudoku.js">here.</a></p>
 
-  <div class="game-container">
-    <div id="menu">
-      <button id="startGame">Start Game</button>
-      <label for="difficulty">Choose a Difficulty:</label>
-      <select id="difficulty">
-        <option value="43">Easy</option>
-        <option value="51">Medium</option>
-        <option value="56">Hard</option>
-        <option value="58">Expert</option>
-      </select>
-    </div>
-    <div id="game" style="display: none;">
-      <div id="toolbar">
-        <button id="menuButton">Menu</button>
-        <button id="restartButton">Restart</button>
-        <span id="mistakesLeft">Mistakes Left: 3</span>
+    <div class="game-container">
+      <div id="menu">
+        <button id="startGame">Start Game</button>
+        <label for="difficulty">Choose a Difficulty:</label>
+        <select id="difficulty">
+          <option value="43">Easy</option>
+          <option value="51">Medium</option>
+          <option value="56">Hard</option>
+          <option value="58">Expert</option>
+        </select>
       </div>
-      <div id="board"></div>
-      <div id="numberSelector"></div>
-      <div id="solverControls">
-        <button id="toggleHighlight">Enable Highlighting</button>
-        <button id="recursiveSolver">Recursive Solver</button>
-        <label for="intervalSlider">Interval Between Iterations: 20 milliseconds</label>
-        <input type="range" id="intervalSlider" min="0" max="3000" value="20" step="10">
+      <div id="game" style="display: none;">
+        <div id="toolbar">
+          <button id="menuButton">Menu</button>
+          <button id="restartButton">Restart</button>
+          <span id="mistakesLeft">Mistakes Left: 3</span>
+        </div>
+        <div id="board"></div>
+        <div id="numberSelector"></div>
+        <div id="solverControls">
+          <button id="toggleHighlight">Enable Highlighting</button>
+          <button id="recursiveSolver">Recursive Solver</button>
+          <label for="intervalSlider">Interval Between Iterations: 20 milliseconds</label>
+          <input type="range" id="intervalSlider" min="0" max="3000" value="20" step="10">
+        </div>
       </div>
     </div>
+
+    <script src="../../scripts/sudoku.js"></script>
   </div>
-
+  
   <script type="module" src="../../scripts/project-pages.js"></script>
-  <script src="../../scripts/sudoku.js"></script>
 </body>
 </html>

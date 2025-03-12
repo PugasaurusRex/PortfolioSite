@@ -11,27 +11,30 @@
 <body>
   <nav class="navbar"></nav>
 
-  <h1 style="text-align: center;">Minesweeper</h1>
-  <p style="text-align: center;">Originally created in Python. Code found <a target="_blank" href="https://github.com/PugasaurusRex/MineSweeper/blob/master/MineSweeper.py">here.</a></p>
-  <p style="text-align: center;">Recreated in HTML, CSS, and JavaScript. Code found <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/minesweeper.js">here.</a></p>
+  <div class="project-container">
+    <h1 style="text-align: center;">Minesweeper</h1>
+    <p style="text-align: center;">Originally created in Python. Code found <a target="_blank" href="https://github.com/PugasaurusRex/MineSweeper/blob/master/MineSweeper.py">here.</a></p>
+    <p style="text-align: center;">Recreated in HTML, CSS, and JavaScript. Code found <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/minesweeper.js">here.</a></p>
 
-  <div class="game-container">
-    <div class="container">
-      <div class="settings">
-        <label for="rows">Rows:</label>
-        <input type="number" id="rows" value="8" min="8" max="20">
-        <label for="cols">Columns:</label>
-        <input type="number" id="cols" value="8" min="8" max="20">
-        <label for="bombs">Bombs:</label>
-        <input type="number" id="bombs" value="10" min="1" max="100">
-        <button id="start">Start Game</button>
+    <div class="game-container">
+      <div class="container">
+        <div class="settings">
+          <label for="rows">Rows:</label>
+          <input type="number" id="rows" value="8" min="8" max="20">
+          <label for="cols">Columns:</label>
+          <input type="number" id="cols" value="8" min="8" max="20">
+          <label for="bombs">Bombs:</label>
+          <input type="number" id="bombs" value="10" min="1" max="100">
+          <button id="start">Start Game</button>
+        </div>
+        <div id="game"></div>
+        <div id="message"></div>
       </div>
-      <div id="game"></div>
-      <div id="message"></div>
     </div>
+
+    <script src="../../scripts/minesweeper.js"></script>
   </div>
 
   <script type="module" src="../../scripts/project-pages.js"></script>
-  <script src="../../scripts/minesweeper.js"></script>
 </body>
 </html>

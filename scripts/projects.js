@@ -70,6 +70,34 @@ async function createProjects() {
   await createProject('The Last Defense', 'the-last-defense');
   await createProject('Gravity Runner', 'gravity-runner');
   await createProject('Dungeon Runners', 'dungeon-runners');
+
+  // After all projects are created, initialize the Intersection Observer
+  initializeIntersectionObserver();
 }
 
-createProjects();
+// Function to initialize the Intersection Observer
+function initializeIntersectionObserver() {
+  const projectContainers = document.querySelectorAll(".project-container");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        } else {
+          entry.target.classList.remove("visible");
+        }
+      });
+    },
+    { threshold: 0.25 } // Trigger when 50% of the item is visible
+  );
+
+  projectContainers.forEach((item) => {
+    observer.observe(item);
+  });
+}
+
+// Start the process when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  createProjects();
+});

@@ -72,14 +72,14 @@ button:hover {
   margin-top: 5px;
 }
 
-.replace-me {
+.replace {
   width: 400px;
   height: 400px;
   box-shadow: inset 0 0 10px rgba(0,0,0,.5);
   position: relative;
 }
 
-.replace-me:after {
+.replace:after {
   content:"";
   border: 10px solid transparent;
   border-left: 15px solid black;
@@ -90,7 +90,7 @@ button:hover {
   left: calc(50% - 10px);
 }
 
-.replace-me:before {
+.replace:before {
   content:"";
   border: 2px solid black;
   width: 50px;
@@ -103,6 +103,6 @@ button:hover {
   transition: background 200ms;
 }
 
-.replace-me:hover:before {
+.replace:hover:before {
   background: cornflowerblue;
 }

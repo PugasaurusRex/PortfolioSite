@@ -19,24 +19,15 @@
 
     <p style="text-align: center; margin-top: 20px;">Try the game here. (Only works on desktops.)</p>
 
-    <div class="game-container">
-      <div class="replace-me"></div>
+    <div id="defense" class="game-container">
+      <div id="defense-replace" class="replace"></div>
     </div>
-    
-    <script>
-      const replace = document.querySelector(".replace-me");
-      replace.addEventListener('click', () => {
-        document.querySelector('.game-container').innerHTML = `
-          <iframe class="game-frame" allowfullscreen="" frameborder="0" src="https://itch.io/embed-upload/3691150?color=000000" width="980" height="580">
-            <a href="https://pugasaurusrex.itch.io/the-last-defense">Play The Last Defense on itch.io</a>
-          </iframe>
-        `;
-        replace.parentNode.removeChild(replace);
-      });
-    </script>
   </div>
   
-
   <script type="module" src="../../scripts/project-pages.js"></script>
+  <script type="module">
+    import { lastDefense } from '../../scripts/project-pages.js';
+    lastDefense();
+  </script>
 </body>
 </html>

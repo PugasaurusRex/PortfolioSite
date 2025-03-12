@@ -1,6 +1,8 @@
 import { createNavBar } from "./navbar.js";
 import { sudoku } from './sudoku.js';
-import { minesweeper } from './minesweeper.js'
+import { minesweeper } from './minesweeper.js';
+import { gravityGame } from "./project-pages.js";
+import { lastDefense } from "./project-pages.js";
 
 createNavBar('../');
 
@@ -79,6 +81,8 @@ async function createProjects() {
   // Initialize games
   minesweeper();
   sudoku();
+  lastDefense();
+  gravityGame();
 }
 
 // Function to initialize the Intersection Observer

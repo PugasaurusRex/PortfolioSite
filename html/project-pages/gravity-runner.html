@@ -17,27 +17,15 @@
 
     <p style="text-align: center; margin-top: 20px;">Try the game here. (Only works on desktops.)</p>
 
-    <div class="game-container">
-      <div id="test" class="replace-me"></div>
+    <div id="gravity-game" class="game-container">
+      <div id="gravity-replace" class="replace"></div>
     </div>
-
-    <script>
-      const replace = document.querySelector(".replace-me");
-      replace.addEventListener('click', () => {
-        document.querySelector('.game-container').innerHTML = `
-          <iframe
-            frameborder="0"
-            src="https://itch.io/embed-upload/13051787?color=333333"
-            allowfullscreen=""
-            width="980" height="580">
-            <a href="https://pugasaurusrex.itch.io/gravity-runner">Play Gravity Runner on itch.io</a>
-          </iframe>
-        `;
-        replace.parentNode.removeChild(replace);
-      });
-    </script>
   </div>
 
   <script type="module" src="../../scripts/project-pages.js"></script>
+  <script type="module">
+    import { gravityGame } from '../../scripts/project-pages.js';
+    gravityGame();
+  </script>
 </body>
 </html>

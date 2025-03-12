@@ -18,37 +18,40 @@
 
     <div class="game-container">
       <div class="container">
-        <div id="menu">  
+        <div id="sudoku-menu">  
           <label for="difficulty">Choose a Difficulty:</label>
-          <select id="difficulty">
+          <select id="sudoku-difficulty">
             <option value="43">Easy</option>
             <option value="51">Medium</option>
             <option value="56">Hard</option>
             <option value="58">Expert</option>
           </select>
-          <button id="startGame">Start Game</button>
+          <button id="sudoku-startGame">Start Game</button>
         </div>
-        <div id="game" style="display: none;">
-          <div id="toolbar">
-            <button id="menuButton">Menu</button>
-            <button id="restartButton">Restart</button>
-            <span id="mistakesLeft">Mistakes Left: 3</span>
+        <div id="sudoku-game" style="display: none;">
+          <div id="sudoku-toolbar">
+            <button id="sudoku-menuButton">Menu</button>
+            <button id="sudoku-restartButton">Restart</button>
+            <span id="sudoku-mistakesLeft">Mistakes Left: 3</span>
           </div>
-          <div id="board"></div>
-          <div id="numberSelector"></div>
-          <div id="solverControls">
-            <button id="toggleHighlight">Enable Highlighting</button>
-            <button id="recursiveSolver">Recursive Solver</button>
+          <div id="sudoku-board"></div>
+          <div id="sudoku-numberSelector"></div>
+          <div id="sudoku-solverControls">
+            <button id="sudoku-toggleHighlight">Enable Highlighting</button>
+            <button id="sudoku-recursiveSolver">Recursive Solver</button>
             <label for="intervalSlider">Interval Between Iterations: 20 milliseconds</label>
-            <input type="range" id="intervalSlider" min="0" max="3000" value="20" step="10">
+            <input type="range" id="sudoku-intervalSlider" min="0" max="3000" value="20" step="10">
           </div>
         </div>
       </div>
     </div>
-
-    <script src="../../scripts/sudoku.js"></script>
   </div>
   
   <script type="module" src="../../scripts/project-pages.js"></script>
+
+  <script type="module">
+    import { sudoku } from '../../scripts/sudoku.js';
+    sudoku();
+  </script>
 </body>
 </html>

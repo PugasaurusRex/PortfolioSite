@@ -1,9 +1,3 @@
-.game-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
-
 .container {
   text-align: center;
   background-color: #183b45;
@@ -19,6 +13,16 @@
 .settings input {
   width: 50px;
   margin-right: 10px;
+}
+
+#start {
+  background-color: #3e3d41;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 #game {

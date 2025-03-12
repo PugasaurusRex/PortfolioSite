@@ -47,7 +47,7 @@ async function createProject(name, htmlFile) {
       // Add the project content to the project list
       const projectContainer = doc.querySelector('.project-container');
       if (projectContainer) {
-        projectList.innerHTML += projectContainer.innerHTML;
+        projectList.innerHTML += projectContainer.outerHTML;
       } else {
         console.warn(`No .project-container found in ${htmlFile}.html`);
       }
@@ -65,11 +65,11 @@ async function createProject(name, htmlFile) {
 async function createProjects() {
   await createProject('VR Multiplayer Shooter', 'vr-shooter');
   await createProject('VR Computer Builder', 'vr-computer-builder');
-  await createProject('Dungeon Runners', 'dungeon-runners');
-  await createProject('The Last Defense', 'the-last-defense');
-  await createProject('Gravity Runner', 'gravity-runner');
   await createProject('Minesweeper', 'minesweeper');
   await createProject('Sudoku Solver', 'sudoku');
+  await createProject('The Last Defense', 'the-last-defense');
+  await createProject('Gravity Runner', 'gravity-runner');
+  await createProject('Dungeon Runners', 'dungeon-runners');
 }
 
 createProjects();

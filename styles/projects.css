@@ -1,7 +1,6 @@
 .projects-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   text-align: center;
   width: 100%;
 }
@@ -54,10 +53,6 @@
 
 /* Mobile styles (applied when screen width is 768px or less) */
 @media (max-width: 768px) {
-  .projects-container {
-    padding: 10px; /* Reduce padding for mobile */
-  }
-
   .project-container {
     margin-bottom: 30px; /* Reduce margin for mobile */
   }

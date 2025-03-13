@@ -55,7 +55,6 @@ button:hover {
   color: #61dafb;
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -117,15 +116,14 @@ button:hover {
 
   /* Navigation Bar Adjustments */
   .navbar {
-    flex-direction: column; /* Stack links vertically */
-    gap: 10px; /* Reduce gap between links */
+    flex-direction: row; /* Stack links vertically */
+    gap: 20px; /* Reduce gap between links */
     padding-top: 20px; /* Reduce padding */
     padding-bottom: 20px;
   }
 
   .nav-link {
     font-size: 1rem; /* Smaller font size for mobile */
-    padding: 8px 12px; /* Smaller padding for mobile */
   }
 
   /* Game Container Adjustments */
@@ -136,15 +134,5 @@ button:hover {
   .replace {
     width: 300px; /* Smaller width for mobile */
     height: 300px; /* Smaller height for mobile */
-  }
-
-  .replace:after {
-    top: calc(50% - 8px); /* Adjust position for smaller container */
-    left: calc(50% - 8px);
-  }
-
-  .replace:before {
-    top: calc(50% - 22px); /* Adjust position for smaller container */
-    left: calc(50% - 26px);
   }
 }

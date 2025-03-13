@@ -9,6 +9,23 @@
   margin: 50px 0 0;
 }
 
+.experience-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
 .experience-title {
   margin: 0 0 10px;
+  flex: 1 1 100%;
+}
+
+.experience-company {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.experience-date {
+  font-style: italic;
 }

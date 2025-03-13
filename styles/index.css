@@ -174,11 +174,18 @@
     flex-direction: column; /* Stack boxes vertically */
     gap: 20px; /* Reduce gap between boxes */
     margin-top: 30px; /* Reduce margin for mobile */
+    width: 100%;
+  }
+
+  .box-container .link {
+    width: 80%;
+    display: flex;
+    justify-content: center;
   }
 
   .box {
-    width: 150px; /* Reduce box size for mobile */
-    height: 150px; /* Reduce box size for mobile */
+    height: 100px; /* Reduce box size for mobile */
+    flex: 1 1 100%;
   }
 
   .box-text {

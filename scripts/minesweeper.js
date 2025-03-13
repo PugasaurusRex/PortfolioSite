@@ -15,14 +15,8 @@ export function minesweeper() {
   startButton.addEventListener('click', startGame);
 
   function startGame() {
-    rows = parseInt(rowsInput.value);
-    cols = parseInt(colsInput.value);
-    bombs = parseInt(bombsInput.value);
-
-    if (bombs >= rows * cols) {
-      alert('Too many bombs! Reduce the number of bombs.');
+    if (!getDifficulty())
       return;
-    }
 
     initializeBoard();
     placeBombs();
@@ -50,6 +44,41 @@ export function minesweeper() {
         bombsPlaced++;
       }
     }
+  }
+
+  function getDifficulty() {
+    let difficulty = parseInt(document.getElementById("ms-difficulty").value);
+    
+    if (difficulty === 1) {
+      rows = cols = 9;
+      bombs = 10;
+    }
+    else if (difficulty === 2) {
+      rows = cols = 16;
+      bombs = 40;
+    }
+    else if (difficulty === 3) {
+      rows = 16;
+      cols = 30;
+      bombs = 99;
+    }
+    else if (difficulty === 4) {
+      rows = 20;
+      cols = 30;
+      bombs = 130;
+    }
+    if (difficulty === 5) { // Custom difficulty // Not implemented yet
+      rows = parseInt(rowsInput.value);
+      cols = parseInt(colsInput.value);
+      bombs = parseInt(bombsInput.value);
+    }
+
+    if (bombs >= rows * cols) {
+      alert('Too many bombs! Reduce the number of bombs.');
+      return false;
+    }
+
+    return true;
   }
 
   function calculateNumbers() {

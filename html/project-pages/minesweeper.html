@@ -13,18 +13,30 @@
 
   <div class="project-container">
     <h1 style="text-align: center;">Minesweeper</h1>
-    <p style="text-align: center;">Originally created in Python. Code found <a target="_blank" href="https://github.com/PugasaurusRex/MineSweeper/blob/master/MineSweeper.py">here.</a></p>
-    <p style="text-align: center;">Recreated in HTML, CSS, and JavaScript. Code found <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/minesweeper.js">here.</a></p>
+    <p>Used: Python, HTML, CSS, JavaScript</p>
+    <a target="_blank" href="https://github.com/PugasaurusRex/MineSweeper/blob/master/MineSweeper.py">Python Code</a>
+    <a target="_blank" href="https://github.com/PugasaurusRex/PortfolioSite/blob/master/scripts/minesweeper.js">JavaScript Code</a>
 
     <div class="game-container">
       <div class="container">
         <div class="settings">
-          <label for="rows">Rows:</label>
-          <input type="number" id="ms-rows" value="8" min="8" max="20">
-          <label for="cols">Columns:</label>
-          <input type="number" id="ms-cols" value="8" min="8" max="20">
-          <label for="bombs">Bombs:</label>
-          <input type="number" id="ms-bombs" value="10" min="1" max="100">
+          <label for="difficulty">Choose a Difficulty:</label>
+          <select id="ms-difficulty">
+            <option value="1">Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+            <option value="4">Expert</option>
+          </select>
+
+          <div class="custom-settings hidden">
+            <label for="rows">Rows:</label>
+            <input type="number" id="ms-rows" value="8" min="8" max="20">
+            <label for="cols">Columns:</label>
+            <input type="number" id="ms-cols" value="8" min="8" max="20">
+            <label for="bombs">Bombs:</label>
+            <input type="number" id="ms-bombs" value="10" min="1" max="100">
+          </div>
+
           <button id="ms-start">Start Game</button>
         </div>
         <div id="ms-game"></div>

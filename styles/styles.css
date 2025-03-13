@@ -52,7 +52,10 @@ button:hover {
 
 .nav-link {
   text-decoration: none;
-  color: #61dafb;
+  background-color: #3e3d41;
+  color: white;
+  border: none;
+  padding: 10px 20px;
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 5px;
@@ -124,6 +127,7 @@ button:hover {
 
   .nav-link {
     font-size: 1rem; /* Smaller font size for mobile */
+    padding: 10px 10px;
   }
 
   /* Game Container Adjustments */

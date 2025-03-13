@@ -98,3 +98,36 @@
 .hidden {
   display: none;
 }
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  /* Sudoku Board Adjustments */
+  #sudoku-board {
+    grid-template-columns: repeat(9, 40px); /* Smaller cells for mobile */
+    grid-template-rows: repeat(9, 40px); /* Smaller cells for mobile */
+  }
+
+  #sudoku-board div {
+    font-size: 16px; /* Smaller font size for mobile */
+  }
+
+  #sudoku-numberSelector button {
+    width: 40px; /* Smaller buttons for mobile */
+    height: 40px; /* Smaller buttons for mobile */
+    margin: 3px; /* Reduce margin for mobile */
+  }
+
+  /* Minesweeper Adjustments */
+  .settings input {
+    width: 40px; /* Smaller input fields for mobile */
+  }
+
+  #ms-message {
+    font-size: 1em; /* Smaller font size for mobile */
+  }
+
+  /* General Adjustments */
+  .container {
+    padding: 15px; /* Reduce padding for mobile */
+  }
+}

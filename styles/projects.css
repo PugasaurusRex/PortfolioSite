@@ -51,3 +51,30 @@
 .hidden {
   display: none;
 }
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 10px; /* Reduce padding for mobile */
+  }
+
+  .project-container {
+    margin-bottom: 30px; /* Reduce margin for mobile */
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust column size for mobile */
+    gap: 15px; /* Reduce gap between items */
+    padding: 15px; /* Reduce padding for mobile */
+  }
+
+  .project-box {
+    width: 100%; /* Full width for mobile */
+    height: 150px; /* Reduce height for mobile */
+  }
+
+  .project-box h3 {
+    font-size: 1.2rem; /* Reduce font size for mobile */
+    margin: 10px; /* Reduce margin for mobile */
+  }
+}

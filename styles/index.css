@@ -54,6 +54,7 @@
 .summary-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 30px;
 }
 
@@ -95,6 +96,7 @@
 .box-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 50px;
   margin-top: 50px;
 }
@@ -118,4 +120,68 @@
 
 .box-text {
   font-size: 32px;
+}
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  /* Name Container Adjustments */
+  .name-container {
+    flex-direction: column; /* Stack items vertically */
+    margin-top: 30px; /* Reduce margin for mobile */
+  }
+
+  .profile-pic {
+    margin-right: 0; /* Remove right margin for mobile */
+    margin-bottom: 15px; /* Add spacing between stacked items */
+  }
+
+  .animated-name {
+    font-size: 48px; /* Reduce font size for mobile */
+  }
+
+  /* Summary Container Adjustments */
+  .summary-container {
+    margin-top: 20px; /* Reduce margin for mobile */
+  }
+
+  .summary {
+    font-size: 20px; /* Reduce font size for mobile */
+  }
+
+  /* Contact Container Adjustments */
+  .contact-container {
+    flex-direction: column; /* Stack items vertically */
+    margin-top: 20px; /* Adjust margin for mobile */
+  }
+
+  .contact-info {
+    margin-left: 0; /* Remove left margin for mobile */
+    margin-top: 10px; /* Add spacing between stacked items */
+  }
+
+  .linkedin-icon {
+    width: 40px; /* Reduce icon size for mobile */
+    height: 40px; /* Reduce icon size for mobile */
+  }
+
+  /* Skills Container Adjustments */
+  .skills {
+    width: 90%; /* Increase width for better readability on mobile */
+  }
+
+  /* Box Container Adjustments */
+  .box-container {
+    flex-direction: column; /* Stack boxes vertically */
+    gap: 20px; /* Reduce gap between boxes */
+    margin-top: 30px; /* Reduce margin for mobile */
+  }
+
+  .box {
+    width: 150px; /* Reduce box size for mobile */
+    height: 150px; /* Reduce box size for mobile */
+  }
+
+  .box-text {
+    font-size: 24px; /* Reduce font size for mobile */
+  }
 }

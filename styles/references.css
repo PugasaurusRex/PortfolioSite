@@ -40,3 +40,24 @@
 .reference-info {
   cursor: text;
 }
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  .reference {
+    width: 90%; /* Make the reference box wider on mobile */
+  }
+
+  .reference-name {
+    font-size: 24px; /* Reduce font size for mobile */
+  }
+
+  .reference-info-row {
+    flex-direction: column; /* Stack info vertically on mobile */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .reference-title {
+    margin-left: 0; /* Remove left margin for mobile */
+    margin-bottom: 5px; /* Add spacing between stacked items */
+  }
+}

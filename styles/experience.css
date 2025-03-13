@@ -29,3 +29,34 @@
 .experience-date {
   font-style: italic;
 }
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  .experience-list {
+    padding: 0 15px; /* Add padding for better spacing on mobile */
+  }
+
+  .experience-item {
+    margin: 30px 0 0; /* Reduce margin for tighter spacing on mobile */
+  }
+
+  .experience-header {
+    flex-direction: column; /* Stack items vertically on mobile */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .experience-title {
+    font-size: 1.2rem; /* Reduce font size for mobile */
+    margin: 0 0 8px; /* Adjust margin for mobile */
+  }
+
+  .experience-company {
+    margin-right: 0; /* Remove right margin for mobile */
+    margin-bottom: 5px; /* Add spacing between stacked items */
+    font-size: 1rem; /* Reduce font size for mobile */
+  }
+
+  .experience-date {
+    font-size: 0.9rem; /* Reduce font size for mobile */
+  }
+}

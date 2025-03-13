@@ -47,6 +47,8 @@ button:hover {
   padding-top: 30px; /* Space below the name */
   padding-bottom: 30px;
   background-color:#183b45;
+  width: 100%; /* Ensure navbar takes full width */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .nav-link {
@@ -105,4 +107,45 @@ button:hover {
 
 .replace:hover:before {
   background: cornflowerblue;
+}
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  /* Adjust body and typography for mobile */
+  body {
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  /* Navigation Bar Adjustments */
+  .navbar {
+    flex-direction: column; /* Stack links vertically */
+    gap: 10px; /* Reduce gap between links */
+    padding-top: 20px; /* Reduce padding */
+    padding-bottom: 20px;
+  }
+
+  .nav-link {
+    font-size: 1rem; /* Smaller font size for mobile */
+    padding: 8px 12px; /* Smaller padding for mobile */
+  }
+
+  /* Game Container Adjustments */
+  .game-container {
+    margin-top: 10px; /* Adjust margin for mobile */
+  }
+
+  .replace {
+    width: 300px; /* Smaller width for mobile */
+    height: 300px; /* Smaller height for mobile */
+  }
+
+  .replace:after {
+    top: calc(50% - 8px); /* Adjust position for smaller container */
+    left: calc(50% - 8px);
+  }
+
+  .replace:before {
+    top: calc(50% - 22px); /* Adjust position for smaller container */
+    left: calc(50% - 26px);
+  }
 }

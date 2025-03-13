@@ -100,3 +100,50 @@
   transform: translateX(30px) translateZ(20px) scale(1.1);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
 }
+
+/* Mobile styles (applied when screen width is 768px or less) */
+@media (max-width: 768px) {
+  .timeline {
+    padding: 10px; /* Reduce padding for mobile */
+  }
+
+  .timeline-container::before {
+    left: 20px; /* Move the timeline line to the left */
+    height: 110%; /* Adjust height for mobile */
+  }
+
+  .timeline-item {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 30px; /* Reduce margin for mobile */
+  }
+
+  .timeline-item.left,
+  .timeline-item.right {
+    justify-content: flex-start; /* Align all items to the left */
+    text-align: left;
+  }
+
+  .timeline-item::before {
+    left: 20px; /* Align the dot with the timeline line */
+    top: 10px; /* Adjust position for mobile */
+  }
+
+  .timeline-content {
+    width: 90%; /* Increase width for better readability on mobile */
+    margin-left: 40px; /* Add margin to align with the timeline line */
+    margin-right: 0; /* Remove right margin for mobile */
+  }
+
+  .timeline-item.left .timeline-content,
+  .timeline-item.right .timeline-content {
+    margin-left: 40px; /* Align all content to the left */
+    margin-right: 0; /* Remove right margin for mobile */
+  }
+
+  .timeline-item.left .timeline-content:hover,
+  .timeline-item.right .timeline-content:hover {
+    transform: none; /* Disable hover effects on mobile */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Keep a subtle shadow */
+  }
+}

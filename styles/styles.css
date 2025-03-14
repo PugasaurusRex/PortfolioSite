@@ -120,13 +120,13 @@ button:hover {
   /* Navigation Bar Adjustments */
   .navbar {
     flex-direction: row; /* Stack links vertically */
-    gap: 20px; /* Reduce gap between links */
+    gap: 7px; /* Reduce gap between links */
     padding-top: 20px; /* Reduce padding */
     padding-bottom: 20px;
   }
 
   .nav-link {
-    font-size: 1rem; /* Smaller font size for mobile */
+    font-size: .8rem; /* Smaller font size for mobile */
     padding: 10px 10px;
   }
 

@@ -38,7 +38,6 @@
 
   .experience-header {
     flex-direction: column; /* Stack items vertically on mobile */
-    align-items: flex-start; /* Align items to the left */
   }
 
   .experience-title {

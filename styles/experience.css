@@ -6,7 +6,11 @@
 }
 
 .experience-item {
-  margin: 50px 0 0;
+  margin: 50px 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .experience-header {
@@ -28,6 +32,19 @@
 
 .experience-date {
   font-style: italic;
+}
+
+.experience-content {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  width: 60%;
+  margin-top: 10px;
+}
+
+.content-item {
+  margin-top: 10px;
+  display: flex;
 }
 
 /* Mobile styles (applied when screen width is 768px or less) */

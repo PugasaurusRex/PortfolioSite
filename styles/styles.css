@@ -139,4 +139,8 @@ button:hover {
     width: 300px; /* Smaller width for mobile */
     height: 300px; /* Smaller height for mobile */
   }
+
+  .video {
+    transform: scale(.8);
+  }
 }

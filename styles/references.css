@@ -12,33 +12,18 @@
   justify-self: center;
 }
 
-.reference-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-.reference-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  margin-top: 5px;
-}
-
 .reference-name {
   font-size: 32px;
   font-weight: bold;
 }
 
 .reference-title {
-  margin-left: 20px;
-  margin-right: 5px;
-  font-weight: bold;
+  margin-top: 5px;
 }
 
 .reference-info {
   cursor: text;
+  margin-top: 5px;
 }
 
 /* Mobile styles (applied when screen width is 768px or less) */
@@ -49,11 +34,6 @@
 
   .reference-name {
     font-size: 24px; /* Reduce font size for mobile */
-  }
-
-  .reference-info-row {
-    flex-direction: column; /* Stack info vertically on mobile */
-    align-items: flex-start; /* Align items to the left */
   }
 
   .reference-title {

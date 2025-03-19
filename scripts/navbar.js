@@ -21,7 +21,7 @@ export function createFooter() {
   // Add content to the footer
   footer.innerHTML = `
     <p><a href="https://www.linkedin.com/in/mark-d-ellis/" target="_blank">LinkedIn</a></p>
-    <p><a href="mailto:example@example.com">markde717@gmail.com</a></p>
+    <p><a href="mailto:markde717@gmail.com">markde717@gmail.com</a></p>
     <p><a href="tel:+12392842358">(239) 284-2358</a></p>
     <p><a href="../documents/resume.pdf" target="_blank">Resume</a></p>
   `;

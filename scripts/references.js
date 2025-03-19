@@ -1,6 +1,7 @@
-import { createNavBar } from "./navbar.js";
+import { createNavBar, createFooter } from "./navbar.js";
 
 createNavBar('../');
+createFooter();
 
 function createReference(name, relationship, currentPosition, phone, email) {
   const references = document.querySelector('.references-container');

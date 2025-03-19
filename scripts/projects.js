@@ -1,40 +1,41 @@
-import { createNavBar } from "./navbar.js";
+import { createNavBar, createFooter } from "./navbar.js";
 import { sudoku } from './sudoku.js';
 import { minesweeper } from './minesweeper.js';
 import { gravityGame } from "./project-pages.js";
 import { lastDefense } from "./project-pages.js";
 
 createNavBar('../');
+createFooter();
 
 const projectGrid = document.querySelector('.project-grid');
 const projectList = document.querySelector('.project-list');
 
-const gridButton = document.querySelector('.grid-btn');
-const listButton = document.querySelector('.list-btn');
+// const gridButton = document.querySelector('.grid-btn');
+// const listButton = document.querySelector('.list-btn');
 
-projectGrid.classList.add('hidden');
+// projectGrid.classList.add('hidden');
 
-gridButton.addEventListener('click', function() {
-  projectGrid.classList.remove('hidden');
-  projectList.classList.add('hidden');
-});
+// gridButton.addEventListener('click', function() {
+//   projectGrid.classList.remove('hidden');
+//   projectList.classList.add('hidden');
+// });
 
-listButton.addEventListener('click', function() {
-  projectList.classList.remove('hidden');
-  projectGrid.classList.add('hidden');
-});
+// listButton.addEventListener('click', function() {
+//   projectList.classList.remove('hidden');
+//   projectGrid.classList.add('hidden');
+// });
 
 async function createProject(name, htmlFile) {
   return new Promise(async (resolve, reject) => {
     try {
       // Add the project to the project grid
-      projectGrid.innerHTML += `
-        <a class='link' href='../html/project-pages/${htmlFile}.html'>
-          <div class="project-box">
-            <h3>${name}</h3>
-          </div>
-        </a>
-      `;
+      // projectGrid.innerHTML += `
+      //   <a class='link' href='../html/project-pages/${htmlFile}.html'>
+      //     <div class="project-box">
+      //       <h3>${name}</h3>
+      //     </div>
+      //   </a>
+      // `;
 
       // Fetch the HTML content of the project page
       const response = await fetch(`../html/project-pages/${htmlFile}.html`);

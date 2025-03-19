@@ -1,3 +1,7 @@
+body {
+  padding: 0;
+}
+
 .name-container {
   display: flex;
   justify-content: center;
@@ -74,6 +78,15 @@
   margin-left: 20px;
   font-weight: bold;
   cursor: text;
+}
+
+.contact-info a {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
 }
 
 .linkedin-icon {

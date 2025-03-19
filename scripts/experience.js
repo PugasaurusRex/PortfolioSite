@@ -1,5 +1,6 @@
-import { createNavBar } from "../scripts/navbar.js";
+import { createNavBar, createFooter } from "../scripts/navbar.js";
 createNavBar('../');
+createFooter();
 
 const experienceList = document.querySelector('.experience-list');
 

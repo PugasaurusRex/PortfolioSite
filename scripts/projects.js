@@ -5,7 +5,6 @@ import { gravityGame } from "./project-pages.js";
 import { lastDefense } from "./project-pages.js";
 
 createNavBar('../');
-createFooter();
 
 const projectGrid = document.querySelector('.project-grid');
 const projectList = document.querySelector('.project-list');
@@ -84,6 +83,8 @@ async function createProjects() {
   sudoku();
   lastDefense();
   gravityGame();
+
+  document.querySelector('.footer').classList.remove('hidden');
 }
 
 // Function to initialize the Intersection Observer
@@ -112,3 +113,5 @@ function initializeIntersectionObserver() {
 document.addEventListener("DOMContentLoaded", function () {
   createProjects();
 });
+
+createFooter();

@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Tektur:wght@400..900&display=swap');
+
 body {
   margin: 0;
   padding: 0;
   background-color: #282c34;
   color: #61dafb;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Oswald';
+  /* font-family: "Tektur"; */
+  /* font-family: "Bona Nova SC"; */
+  /* font-family: 'Atkinson Hyperlegible Next'; */
   padding-top: 100px;
 }
 

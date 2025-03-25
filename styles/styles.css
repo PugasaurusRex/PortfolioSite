@@ -39,11 +39,6 @@ button:hover {
   background-color: #567f4e;
 }
 
-.link {
-  text-decoration: none;
-  color: #61dafb;
-}
-
 /* Navigation Bar Styles */
 .navbar {
   display: flex;
@@ -88,15 +83,6 @@ button:hover {
 
 .footer p {
   margin: 5px 10px;
-}
-
-.footer a {
-  color: #61dafb;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
 }
 
 .game-container {

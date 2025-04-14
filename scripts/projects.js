@@ -74,6 +74,7 @@ async function createProjects() {
   await createProject('The Last Defense', 'the-last-defense');
   await createProject('Gravity Runner', 'gravity-runner');
   await createProject('Dungeon Runners', 'dungeon-runners');
+  await createProject('Portfolio Site', 'portfolio');
 
   // After all projects are created, initialize the Intersection Observer
   initializeIntersectionObserver();

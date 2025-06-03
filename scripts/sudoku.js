@@ -679,7 +679,7 @@ export function sudoku() {
   intervalSlider.addEventListener("input", () => {
     const interval = intervalSlider.value;
     document.querySelector(
-      "#solverControls label"
+      "#sudoku-solverControls label"
     ).textContent = `Interval Between Iterations: ${interval} milliseconds`;
   });
 }

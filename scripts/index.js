@@ -46,5 +46,5 @@ createSkillsSection(['C#', 'Python', 'C/C++', 'Unity 3D', 'Unreal Engine 5', 'Gi
   'Haptics', 'Research', 'Simulations', 'Virtual Reality', 'Prototyping', 'gRPC', 'Visual Studio', 'HTML', 'CSS', 'JavaScript']);
 
 if (window.location.pathname.includes("index")) {
-  window.location.pathname = "mark-d-ellis.com"
+  window.location.pathname = ""
 }

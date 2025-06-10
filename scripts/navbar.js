@@ -5,10 +5,10 @@ export function createNavBar(linkToRoot) {
     return;
 
   nav.innerHTML = `
-      <a class="nav-link" href="${linkToRoot}index.html">Home</a>
-      <a class="nav-link" href="${linkToRoot}html/experience.html">Experience</a>
-      <a class="nav-link" href="${linkToRoot}html/projects.html">Projects</a>
-      <a class="nav-link" href="${linkToRoot}html/references.html">References</a>
+      <a class="nav-link" href="${linkToRoot}index">Home</a>
+      <a class="nav-link" href="${linkToRoot}experience">Experience</a>
+      <a class="nav-link" href="${linkToRoot}projects">Projects</a>
+      <a class="nav-link" href="${linkToRoot}references">References</a>
   `;
 }
 
